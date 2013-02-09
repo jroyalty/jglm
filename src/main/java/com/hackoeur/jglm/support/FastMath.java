@@ -379,6 +379,42 @@ public class FastMath {
         return Math.sqrt(a);
     }
     
+    /**
+     * Compute a fast version of the sqrt as <code>a * invSqrtFast(a)</code>
+     * 
+     * @param a a number on which evaluation is done
+     * @return square root of a
+     */
+    public static float sqrtFast(final float a) {
+    	return a * invSqrtFast(a);
+    }
+    
+    /**
+     * Compute the inverse (reciprocal of) the square root.  Note this is a "fast"
+     * version based on 
+     * <a href="http://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Reciprocal_of_the_square_root">Greg Walsh's algorithm</a>.
+     * 
+     * @param a a number on which evaluation is done
+     * @return inverse square root of a
+     */
+    public static float invSqrtFast(final float a) {
+    	final float xhalf = 0.5f*a;
+        
+        float ux = a;
+        final int ui = 0x5f3759df - (Float.floatToIntBits(ux) >> 1);
+        
+        final float floatBits = Float.intBitsToFloat(ui);
+        ux = floatBits * (1.5f - xhalf * floatBits * floatBits);
+        
+        // After the first computation of 'ux' above, we no long have to use 'floatBits'.
+        // We can just use 'ux' as is.  Note that this line can be repeated arbitrarily 
+        // many times to increase accuracy.  Based on a few tests, I see that two 
+        // iterations produces the same result as 1 / Math.sqrt() does.
+        ux = ux * (1.5f - xhalf * ux * ux);
+        
+        return ux;
+    }
+    
     /** Compute the hyperbolic cosine of a number.
      * @param x number on which evaluation is done
      * @return hyperbolic cosine of x
