@@ -1,0 +1,7 @@
+jglm -- The Java GL Mathematics Library
+Copyright (C) 2012 James L. Royalty
+
+Apache Commons Math
+Copyright (C) 2001-2012 The Apache Software Foundation
+http://commons.apache.org/math/
+** Extracted and modified the FastMath-related classes.
