@@ -98,4 +98,29 @@ public class Mat3Test {
 		
 		Assert.assertEquals(m6, m5);
 	}
+	
+	@Test
+	public void testTranspose() {
+		final Mat3 m1 = new Mat3(
+				1f, 2f, 3f,
+				4f, 5f, 6f,
+				7f, 8f, 9f
+		);
+		
+		final Mat3 m1T = m1.transpose();
+		System.out.println(m1T);
+		final FloatBuffer buffer = m1T.getBuffer();
+		
+		JglmTesting.assertFloatsEqualDefaultTol(1f, buffer.get());
+		JglmTesting.assertFloatsEqualDefaultTol(4f, buffer.get());
+		JglmTesting.assertFloatsEqualDefaultTol(7f, buffer.get());
+		
+		JglmTesting.assertFloatsEqualDefaultTol(2f, buffer.get());
+		JglmTesting.assertFloatsEqualDefaultTol(5f, buffer.get());
+		JglmTesting.assertFloatsEqualDefaultTol(8f, buffer.get());
+
+		JglmTesting.assertFloatsEqualDefaultTol(3f, buffer.get());
+		JglmTesting.assertFloatsEqualDefaultTol(6f, buffer.get());
+		JglmTesting.assertFloatsEqualDefaultTol(9f, buffer.get());
+	}
 }

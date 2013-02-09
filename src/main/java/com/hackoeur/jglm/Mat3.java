@@ -174,6 +174,14 @@ public class Mat3 extends AbstractMat {
 		);
 	}
 	
+	public Mat3 transpose() {
+		return new Mat3(
+				m00, m10, m20,
+				m01, m11, m21,
+				m02, m12, m22
+		);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
