@@ -14,7 +14,10 @@
  */
 package com.hackoeur.jglm;
 
+import java.nio.FloatBuffer;
+
 import com.hackoeur.jglm.support.FastMath;
+import com.hackoeur.jglm.support.Precision;
 
 /**
  * @author James Royalty
@@ -36,10 +39,10 @@ public final class Vec3 extends AbstractVec {
 		this.z = z;
 	}
 	
-	public Vec3(final Vec3 other) {
-		this.x = other.x;
-		this.y = other.y;
-		this.z = other.z;
+	public Vec3(final Vec3 vec) {
+		this.x = vec.x;
+		this.y = vec.y;
+		this.z = vec.z;
 	}
 	
 	@Override
@@ -110,6 +113,18 @@ public final class Vec3 extends AbstractVec {
 		);
 	}
 	
+	@Override
+	public FloatBuffer getBuffer() {
+		final FloatBuffer buffer = allocateFloatBuffer();
+		final int startPos = buffer.position();
+		
+		buffer.put(x).put(y).put(z);
+		
+		buffer.position(startPos);
+		
+		return buffer;
+	}
+
 	public float getX() {
 		return x;
 	}
@@ -157,14 +172,33 @@ public final class Vec3 extends AbstractVec {
 		
 		return true;
 	}
+	
+	@Override
+	public boolean equalsWithEpsilon(final Vec obj, final float epsilon) {
+		if (this == obj) {
+			return true;
+		}
+		
+		if (obj == null) {
+			return false;
+		}
+		
+		if (!(obj instanceof Vec3)) {
+			return false;
+		}
+		
+		final Vec3 other = (Vec3) obj;
+		
+		return Precision.equals(x, other.x, epsilon)
+				&& Precision.equals(y, other.y, epsilon)
+				&& Precision.equals(z, other.z, epsilon);
+	}
 
 	public String toString() {
 		return new StringBuilder()
 			.append(getClass().getSimpleName())
 			.append("{")
-			.append(x).append(", ")
-			.append(y).append(", ")
-			.append(z)
+			.append(String.format("%8.5f %8.5f %8.5f", x, y, z))
 			.append("}")
 			.toString();
 	}

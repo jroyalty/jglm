@@ -14,12 +14,18 @@
  */
 package com.hackoeur.jglm;
 
+import java.nio.FloatBuffer;
+
+import com.hackoeur.jglm.buffer.BufferAllocator;
+import com.hackoeur.jglm.buffer.BufferAllocatorFactory;
 import com.hackoeur.jglm.support.FastMath;
 
 /**
  * @author James Royalty 
  */
 abstract class AbstractVec implements Vec {
+	private static final BufferAllocator BUFFER_ALLOCATOR = BufferAllocatorFactory.getInstance();
+	
 	@Override
 	public final float getLength() {
 		final float sqrt = (float) FastMath.sqrtFast( getLengthSquared() );
@@ -30,5 +36,9 @@ abstract class AbstractVec implements Vec {
 		} else {
 			return sqrt;
 		}
+	}
+	
+	protected FloatBuffer allocateFloatBuffer() {
+		return BUFFER_ALLOCATOR.allocateFloatBuffer( getDimensions() );
 	}
 }

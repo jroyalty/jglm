@@ -14,6 +14,8 @@
  */
 package com.hackoeur.jglm;
 
+import java.nio.FloatBuffer;
+
 /**
  * @author James Royalty
  */
@@ -26,5 +28,8 @@ public interface Vec {
 
 	float getLengthSquared();
 	
-	// FloatBuffer getFloatBuffer();
+	FloatBuffer getBuffer();
+	
+	boolean equalsWithEpsilon(final Vec obj, final float epsilon);
+	
 }

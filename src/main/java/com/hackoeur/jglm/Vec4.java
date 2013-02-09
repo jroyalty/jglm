@@ -14,7 +14,10 @@
  */
 package com.hackoeur.jglm;
 
+import java.nio.FloatBuffer;
+
 import com.hackoeur.jglm.support.FastMath;
+import com.hackoeur.jglm.support.Precision;
 
 /**
  * @author James Royalty
@@ -69,7 +72,7 @@ public class Vec4 extends AbstractVec {
 		return x * x + y * y + z * z + w * w;
 	}
 	
-	public Vec4 geUnitVector() {
+	public Vec4 getUnitVector() {
 		final float sqLength = getLengthSquared();
 		final float invLength = FastMath.invSqrtFast(sqLength);
 		
@@ -113,6 +116,34 @@ public class Vec4 extends AbstractVec {
 		return this.x * vec.x + this.y * vec.y + this.z * vec.z;
 	}
 	
+	public float getX() {
+		return x;
+	}
+
+	public float getY() {
+		return y;
+	}
+
+	public float getZ() {
+		return z;
+	}
+	
+	public float getW() {
+		return w;
+	}
+	
+	@Override
+	public FloatBuffer getBuffer() {
+		final FloatBuffer buffer = allocateFloatBuffer();
+		final int startPos = buffer.position();
+		
+		buffer.put(x).put(y).put(z).put(x);
+		
+		buffer.position(startPos);
+		
+		return buffer;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -149,6 +180,28 @@ public class Vec4 extends AbstractVec {
 			return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public boolean equalsWithEpsilon(final Vec obj, final float epsilon) {
+		if (this == obj) {
+			return true;
+		}
+		
+		if (obj == null) {
+			return false;
+		}
+		
+		if (!(obj instanceof Vec4)) {
+			return false;
+		}
+		
+		Vec4 other = (Vec4) obj;
+		
+		return Precision.equals(x, other.x, epsilon)
+				&& Precision.equals(y, other.y, epsilon)
+				&& Precision.equals(z, other.z, epsilon)
+				&& Precision.equals(w, other.w, epsilon);
 	}
 
 	public String toString() {
