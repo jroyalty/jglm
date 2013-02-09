@@ -123,4 +123,15 @@ public class Mat3Test {
 		JglmTesting.assertFloatsEqualDefaultTol(6f, buffer.get());
 		JglmTesting.assertFloatsEqualDefaultTol(9f, buffer.get());
 	}
+	
+	@Test
+	public void testDeterminant() {
+		Mat3 m1 = new Mat3(
+				-2f, 2f, 3f,
+				-1f, 1f, 3f,
+				2f, 0f, -1f
+		);
+		
+		JglmTesting.assertFloatsEqualDefaultTol(6f, m1.determinant());
+	}
 }
