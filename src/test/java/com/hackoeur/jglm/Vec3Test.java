@@ -1,5 +1,6 @@
 package com.hackoeur.jglm;
 
+import java.nio.FloatBuffer;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -109,6 +110,17 @@ public class Vec3Test {
 		final Vec3 v1 = new Vec3(724362380f, -328511470f, 2144268067f);
 		final Vec3 v2 = new Vec3(724362380f, -328511470f, 2144268067f);
 		Assert.assertEquals(v1, v2);
+		Assert.assertTrue(v1.equalsWithEpsilon(v2, JglmTesting.DEFAULT_EQUALS_TOL));
+	}
+		
+	@Test
+	public void testBuffer() {
+		final Vec3 v1 = new Vec3(724362380f, -328511470f, 2144268067f);
+		final FloatBuffer buffer = v1.getBuffer();
+		
+		JglmTesting.assertFloatsEqualDefaultTol(v1.getX(), buffer.get());
+		JglmTesting.assertFloatsEqualDefaultTol(v1.getY(), buffer.get());
+		JglmTesting.assertFloatsEqualDefaultTol(v1.getZ(), buffer.get());
 	}
 	
 	@Ignore
