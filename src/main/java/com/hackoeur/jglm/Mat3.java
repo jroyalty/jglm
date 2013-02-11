@@ -14,64 +14,189 @@
  */
 package com.hackoeur.jglm;
 
+import java.nio.Buffer;
 import java.nio.FloatBuffer;
 
 import com.hackoeur.jglm.support.Precision;
 
 /**
+ * A 3x3 matrix in <em>column-major</em> order.  This means that the vectors
+ * of the matrix are stored in the columns.  This is the order which OpenGL
+ * and GLSL require, but is the opposite of how C/C++ store 2D arrays in memory.
+ * 
+ * <p>For example, if you create a matrix containing the vectors 
+ * <code>v1 = &lt;1, 2, 3&gt;</code>, <code>v2 = &lt;4, 5, 6&gt;</code> 
+ * and <code>v3 = &lt;7, 8, 9&gt;</code> then conceptual layout will be:
+ * <pre>
+ *   v1 v2 v3
+ * | 1  4  7 |
+ * | 2  5  8 |
+ * | 3  6  9 |</pre>
+ * 
+ * Furthermore, when the matrix is returned as a contiguous block of memory 
+ * (either as an array or a {@link Buffer}) the layout will be:
+ * <pre>
+ * | 1 2 3 4 5 6 7 8 9 |
+ * </pre>
+ * 
  * @author James Royalty
  */
 public class Mat3 extends AbstractMat {
 	public static final Mat3 MAT3_ZERO = new Mat3();
-	public static final Mat3 MAT3_IDENTITY = new Mat3(1f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 1f);
+	public static final Mat3 MAT3_IDENTITY = new Mat3(1.0f);
 	
-	final float m00, m01, m02;
-	final float m10, m11, m12;
-	final float m20, m21, m22;
+	/* ::-------------------------------------------------------------------------:: 
+	 * COLUMN MAJOR LAYOUT: The first index indicates the COLUMN NUMBER.
+	 * The second is the ROW NUMBER.
+	 * 
+	 * | A D G |   | m00 m10 m20 |
+	 * | B E H | = | m01 m11 m21 |
+	 * | C F I |   | m02 m12 m22 |
+	 */
+	final float m00, m10, m20;
+	final float m01, m11, m21;
+	final float m02, m12, m22;
 	
+	/**
+	 * Creates a matrix with all elements equal to ZERO.
+	 */
 	public Mat3() {
-		m00 = m01 = m02 = 0f;
-		m10 = m11 = m12 = 0f;
-		m20 = m21 = m22 = 0f;
+		m00 = m10 = m20 = 0f;
+		m01 = m11 = m21 = 0f;
+		m02 = m12 = m22 = 0f;
 	}
 	
+	/**
+	 * Creates a matrix with the given value along the diagonal.
+	 * 
+	 * @param diagonalValue
+	 */
+	public Mat3(final float diagonalValue) {
+		m00 = m11 = m22 = diagonalValue;
+		m10 = m20 = 0f;
+		m01 = m21 = 0f;
+		m02 = m12 = 0f;
+	}
+	
+	/**
+	 * Create a matrix using the given vectors as <em>columns</em>. For example, 
+	 * <pre>
+	 * Mat3 m1 = new Mat3(
+	 * 	new Vec3(1f, 2f, 3f), // first column
+	 * 	new Vec3(4f, 5f, 6f), // second
+	 * 	new Vec3(7f, 8f, 9f)  // third
+	 * );</pre>
+	 * 
+	 * will create the following 3x3 matrix:
+	 * <pre>
+	 * | 1 4 7 |
+	 * | 2 5 8 |
+	 * | 3 6 9 |
+	 * </pre>
+	 * 
+	 * @param col0 vector for the first column
+	 * @param col1 vector for the second column
+	 * @param col2 vector for the third column
+	 */
+	public Mat3(final Vec3 col0, final Vec3 col1, final Vec3 col2) {
+		this.m00 = col0.x; this.m10 = col1.x; this.m20 = col2.x;
+		this.m01 = col0.y; this.m11 = col1.y; this.m21 = col2.y;
+		this.m02 = col0.z; this.m12 = col1.z; this.m22 = col2.z;
+	}
+	
+	/**
+	 * Creates a matrix using successive triples as <em>columns</em>.  For example,
+	 * <pre>
+	 * Mat3 m1 = new Mat3(
+	 * 	1f, 2f, 3f, // first column
+	 * 	4f, 5f, 6f, // second
+	 * 	7f, 8f, 9f  // third
+	 * );</pre>
+	 * 
+	 * will create the following 3x3 matrix:
+	 * <pre>
+	 * | 1 4 7 |
+	 * | 2 5 8 |
+	 * | 3 6 9 |
+	 * </pre>
+	 *
+	 * @param x00 first column, x
+	 * @param x01 first column, y
+	 * @param x02 first column, z
+	 * @param x10 second column, x
+	 * @param x11 second column, y
+	 * @param x12 second column, z
+	 * @param x20 third column, x
+	 * @param x21 third column, y
+	 * @param x22 third column, z
+	 */
 	public Mat3(
 			final float x00, final float x01, final float x02,
 			final float x10, final float x11, final float x12,
 			final float x20, final float x21, final float x22) {
+		// Col 1
 		this.m00 = x00;
 		this.m01 = x01;
 		this.m02 = x02;
 		
+		// Col 2
 		this.m10 = x10;
 		this.m11 = x11;
 		this.m12 = x12;
 		
+		// Col 3
 		this.m20 = x20;
 		this.m21 = x21;
 		this.m22 = x22;
 	}
 	
+	/**
+	 * Creates a matrix using successive triples as <em>columns</em>.  For example,
+	 * <pre>
+	 * Mat3 m1 = new Mat3(new float[] {
+	 * 	1f, 2f, 3f, // first column
+	 * 	4f, 5f, 6f, // second
+	 * 	7f, 8f, 9f  // third
+	 * });</pre>
+	 * 
+	 * will create the following 3x3 matrix:
+	 * <pre>
+	 * | 1 4 7 |
+	 * | 2 5 8 |
+	 * | 3 6 9 |
+	 * </pre>
+	 * 
+	 * @param mat
+	 */
 	public Mat3(final float[] mat) {
 		assert mat.length >= 9 : "Invalid matrix array length";
 		
 		int i = 0;
 		
+		// Col 1
 		m00 = mat[i++];
 		m01 = mat[i++];
 		m02 = mat[i++];
 		
+		// Col 2
 		m10 = mat[i++];
 		m11 = mat[i++];
 		m12 = mat[i++];
 		
+		// Col 3
 		m20 = mat[i++];
 		m21 = mat[i++];
 		m22 = mat[i++];
 	}
 	
+	/**
+	 * Creates a matrix using successive triples as <em>columns</em>.  The semantics
+	 * are the same as the float array constructor.
+	 * 
+	 * @param buffer
+	 */
 	public Mat3(final FloatBuffer buffer) {
-		assert buffer.capacity() >= 9 : "Invalid matrix buffer capacity";
+		assert buffer.capacity() >= 9 : "Invalid matrix buffer length";
 		
 		final int startPos = buffer.position();
 		
@@ -90,6 +215,11 @@ public class Mat3 extends AbstractMat {
 		buffer.position(startPos);
 	}
 	
+	/**
+	 * Creates a matrix that is a copy of the given matrix.
+	 * 
+	 * @param mat matrix to copy
+	 */
 	public Mat3(final Mat3 mat) {
 		this.m00 = mat.m00;
 		this.m01 = mat.m01;
@@ -119,17 +249,20 @@ public class Mat3 extends AbstractMat {
 		final FloatBuffer buffer = allocateFloatBuffer();
 		final int startPos = buffer.position();
 		
-		buffer.put(m00);
-		buffer.put(m01);
-		buffer.put(m02);
+		// Col 1
+		buffer.put(m00)
+			.put(m01)
+			.put(m02);
 		
-		buffer.put(m10);
-		buffer.put(m11);
-		buffer.put(m12);
+		// Col 2
+		buffer.put(m10)
+			.put(m11)
+			.put(m12);
 		
-		buffer.put(m20);
-		buffer.put(m21);
-		buffer.put(m22);
+		// Col 3
+		buffer.put(m20)
+			.put(m21)
+			.put(m22);
 		
 		buffer.position(startPos);
 		
@@ -140,7 +273,16 @@ public class Mat3 extends AbstractMat {
 	public boolean isIdentity() {
 		return Precision.equals(m00, 1f)
 				&& Precision.equals(m11, 1f)
-				&& Precision.equals(m22, 1f);
+				&& Precision.equals(m22, 1f)
+				
+				&& Precision.equals(m01, 0f)
+				&& Precision.equals(m02, 0f)
+				
+				&& Precision.equals(m10, 0f)
+				&& Precision.equals(m12, 0f)
+				
+				&& Precision.equals(m20, 0f)
+				&& Precision.equals(m21, 0f);
 	}
 
 	@Override
@@ -156,6 +298,14 @@ public class Mat3 extends AbstractMat {
 				&& Precision.equals(m20, 0f)
 				&& Precision.equals(m21, 0f)
 				&& Precision.equals(m22, 0f);
+	}
+	
+	public Mat3 multiply(final float a) {
+		return new Mat3(
+				m00*a, m01*a, m02*a,
+				m10*a, m11*a, m12*a,
+				m20*a, m21*a, m22*a
+		);
 	}
 	
 	public Mat3 multiply(final Mat3 mat) {
@@ -174,6 +324,22 @@ public class Mat3 extends AbstractMat {
 		);
 	}
 	
+	/**
+	 * This is the equivalent of <strong>this * vector</strong> (if we had operator
+	 * overloading).  If you want <strong>vector * this</strong> then 
+	 * see {@link Vec3#multiply(Mat3)}.
+	 * 
+	 * @param vec
+	 * @return
+	 */
+	public Vec3 multiply(final Vec3 vec) {
+		return new Vec3(
+				m00 * vec.x + m10 * vec.y + m20 * vec.z,
+				m01 * vec.x + m11 * vec.y + m21 * vec.z,
+				m02 * vec.x + m12 * vec.y + m22 * vec.z
+		);
+	}
+	
 	public Mat3 transpose() {
 		return new Mat3(
 				m00, m10, m20,
@@ -183,12 +349,7 @@ public class Mat3 extends AbstractMat {
 	}
 	
 	public float determinant() {
-		return (m00 * m11 * m22) 
-				+ (m01 * m12 * m20) 
-				+ (m02 * m10 * m21)
-				- (m02 * m11 * m20) 
-				- (m01 * m10 * m22) 
-				- (m00 * m12 * m21);
+		return m00 * (m11 * m22 - m12 * m21) - m01 * (m10 * m22 - m12 * m20) + m02 * (m10 * m21 - m11 * m20);
 	}
 	
 	@Override
@@ -282,9 +443,9 @@ public class Mat3 extends AbstractMat {
 		return new StringBuilder()
 			.append(getClass().getSimpleName())
 			.append("{")
-			.append("\n ").append(String.format("%8.5f %8.5f %8.5f", m00, m01, m02))
-			.append("\n ").append(String.format("%8.5f %8.5f %8.5f", m10, m11, m12))
-			.append("\n ").append(String.format("%8.5f %8.5f %8.5f", m20, m21, m22))
+			.append("\n ").append(String.format("%8.5f %8.5f %8.5f", m00, m10, m20))
+			.append("\n ").append(String.format("%8.5f %8.5f %8.5f", m01, m11, m21))
+			.append("\n ").append(String.format("%8.5f %8.5f %8.5f", m02, m12, m22))
 			.append("\n}")
 			.toString();
 	}
