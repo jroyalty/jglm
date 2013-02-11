@@ -30,6 +30,5 @@ public interface Vec {
 	
 	FloatBuffer getBuffer();
 	
-	boolean equalsWithEpsilon(final Vec obj, final float epsilon);
-	
+	boolean equalsWithEpsilon(Vec obj, float epsilon);
 }

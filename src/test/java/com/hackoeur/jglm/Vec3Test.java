@@ -20,6 +20,22 @@ public class Vec3Test {
 	}
 	
 	@Test
+	public void testMultiplyMat() {
+		Mat3 m1 = new Mat3(
+				1f, 2f, 3f,
+				4f, 5f, 6f,
+				7f, 8f, 9f
+		);
+		
+		Vec3 v1 = new Vec3(10.0f, 11.0f, 12.0f);
+		Vec3 result = v1.multiply(m1);
+		
+		JglmTesting.assertFloatsEqualDefaultTol(68f, result.x);
+		JglmTesting.assertFloatsEqualDefaultTol(167f, result.y);
+		JglmTesting.assertFloatsEqualDefaultTol(266f, result.z);
+	}
+	
+	@Test
 	public void testGetLength() {
 		Vec3 v1 = new Vec3(724362380f, -328511470f, 2144268067f);
 		float len = (float) StrictMath.sqrt( 
