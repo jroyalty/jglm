@@ -14,30 +14,13 @@
  */
 package com.hackoeur.jglm;
 
-import java.nio.Buffer;
 import java.nio.FloatBuffer;
 
+import com.hackoeur.jglm.support.Compare;
 import com.hackoeur.jglm.support.Precision;
 
 /**
- * A 3x3 matrix in <em>column-major</em> order.  This means that the vectors
- * of the matrix are stored in the columns.  This is the order which OpenGL
- * and GLSL require, but is the opposite of how C/C++ store 2D arrays in memory.
- * 
- * <p>For example, if you create a matrix containing the vectors 
- * <code>v1 = &lt;1, 2, 3&gt;</code>, <code>v2 = &lt;4, 5, 6&gt;</code> 
- * and <code>v3 = &lt;7, 8, 9&gt;</code> then conceptual layout will be:
- * <pre>
- *   v1 v2 v3
- * | 1  4  7 |
- * | 2  5  8 |
- * | 3  6  9 |</pre>
- * 
- * Furthermore, when the matrix is returned as a contiguous block of memory 
- * (either as an array or a {@link Buffer}) the layout will be:
- * <pre>
- * | 1 2 3 4 5 6 7 8 9 |
- * </pre>
+ * A 3x3 matrix.
  * 
  * @author James Royalty
  */
@@ -271,33 +254,33 @@ public class Mat3 extends AbstractMat {
 
 	@Override
 	public boolean isIdentity() {
-		return Precision.equals(m00, 1f)
-				&& Precision.equals(m11, 1f)
-				&& Precision.equals(m22, 1f)
+		return Precision.equals(m00, 1f, Compare.MAT_EPSILON)
+				&& Precision.equals(m11, 1f, Compare.MAT_EPSILON)
+				&& Precision.equals(m22, 1f, Compare.MAT_EPSILON)
 				
-				&& Precision.equals(m01, 0f)
-				&& Precision.equals(m02, 0f)
+				&& Precision.equals(m01, 0f, Compare.ABS_EPSILON)
+				&& Precision.equals(m02, 0f, Compare.ABS_EPSILON)
 				
-				&& Precision.equals(m10, 0f)
-				&& Precision.equals(m12, 0f)
+				&& Precision.equals(m10, 0f, Compare.ABS_EPSILON)
+				&& Precision.equals(m12, 0f, Compare.ABS_EPSILON)
 				
-				&& Precision.equals(m20, 0f)
-				&& Precision.equals(m21, 0f);
+				&& Precision.equals(m20, 0f, Compare.ABS_EPSILON)
+				&& Precision.equals(m21, 0f, Compare.ABS_EPSILON);
 	}
 
 	@Override
 	public boolean isZero() {
-		return Precision.equals(m00, 0f)
-				&& Precision.equals(m01, 0f)
-				&& Precision.equals(m02, 0f)
+		return Precision.equals(m00, 0f, Compare.ABS_EPSILON)
+				&& Precision.equals(m01, 0f, Compare.ABS_EPSILON)
+				&& Precision.equals(m02, 0f, Compare.ABS_EPSILON)
 				
-				&& Precision.equals(m10, 0f)
-				&& Precision.equals(m11, 0f)
-				&& Precision.equals(m12, 0f)
+				&& Precision.equals(m10, 0f, Compare.ABS_EPSILON)
+				&& Precision.equals(m11, 0f, Compare.ABS_EPSILON)
+				&& Precision.equals(m12, 0f, Compare.ABS_EPSILON)
 				
-				&& Precision.equals(m20, 0f)
-				&& Precision.equals(m21, 0f)
-				&& Precision.equals(m22, 0f);
+				&& Precision.equals(m20, 0f, Compare.ABS_EPSILON)
+				&& Precision.equals(m21, 0f, Compare.ABS_EPSILON)
+				&& Precision.equals(m22, 0f, Compare.ABS_EPSILON);
 	}
 	
 	public Mat3 multiply(final float a) {
