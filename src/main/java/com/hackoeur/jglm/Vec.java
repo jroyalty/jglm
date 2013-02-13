@@ -20,8 +20,6 @@ import java.nio.FloatBuffer;
  * @author James Royalty
  */
 public interface Vec {
-	public static final float EPSILON = 0.0001f;
-	
 	int getDimensions();
 	
 	float getLength();
@@ -29,6 +27,8 @@ public interface Vec {
 	float getLengthSquared();
 	
 	FloatBuffer getBuffer();
+	
+	boolean equalsWithEpsilon(Vec obj);
 	
 	boolean equalsWithEpsilon(Vec obj, float epsilon);
 }
