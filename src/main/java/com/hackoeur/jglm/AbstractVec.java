@@ -18,6 +18,7 @@ import java.nio.FloatBuffer;
 
 import com.hackoeur.jglm.buffer.BufferAllocator;
 import com.hackoeur.jglm.buffer.BufferAllocatorFactory;
+import com.hackoeur.jglm.support.Compare;
 import com.hackoeur.jglm.support.FastMath;
 
 /**
@@ -27,15 +28,13 @@ abstract class AbstractVec implements Vec {
 	private static final BufferAllocator BUFFER_ALLOCATOR = BufferAllocatorFactory.getInstance();
 	
 	@Override
+	public boolean equalsWithEpsilon(final Vec obj) {
+		return equalsWithEpsilon(obj, Compare.VEC_EPSILON);
+	}
+	
+	@Override
 	public final float getLength() {
-		final float sqrt = (float) FastMath.sqrtFast( getLengthSquared() );
-		final float diff = FastMath.abs(1.0f - sqrt);
-		
-		if (diff <= EPSILON) { // FIXME: Should I be doing this here?!
-			return 1f;
-		} else {
-			return sqrt;
-		}
+		return (float) FastMath.sqrtFast( getLengthSquared() );
 	}
 	
 	protected FloatBuffer allocateFloatBuffer() {
