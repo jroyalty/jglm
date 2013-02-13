@@ -31,10 +31,10 @@ public final class Compare {
 		String s = System.getProperty("jglm.absEpsilon", "1.192092896e-07");
 		ABS_EPSILON = Float.parseFloat(s);
 		
-		s = System.getProperty("jglm.vecEpsilon", "1e-6");
+		s = System.getProperty("jglm.vecEpsilon", "0.00001");
 		VEC_EPSILON = Float.parseFloat(s);
 		
-		s = System.getProperty("jglm.matEpsilon", "1e-6");
+		s = System.getProperty("jglm.matEpsilon", "0.00001");
 		MAT_EPSILON = Float.parseFloat(s);
 	}
 }
