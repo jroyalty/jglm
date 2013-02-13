@@ -7,7 +7,9 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.hackoeur.jglm.support.Compare;
 import com.hackoeur.jglm.support.FastMath;
+import com.hackoeur.jglm.support.Precision;
 
 /**
  * @author James Royalty
@@ -67,7 +69,7 @@ public class Vec3Test {
 		
 		final Vec3 vec2 = new Vec3(-2652735904120045568f, 1379645337739722752f, 1107497449448013824f);
 		final Vec3 norm2 = vec2.getUnitVector();
-		Assert.assertTrue(Float.compare(norm2.getLength(), 1f) == 0);
+		Assert.assertTrue(Precision.equals(norm2.getLength(), 1f, Compare.VEC_EPSILON));
 		Assert.assertEquals(-0.831951, norm2.getX(), JglmTesting.DEFAULT_EQUALS_TOL);
 		Assert.assertEquals(0.432685, norm2.getY(), JglmTesting.DEFAULT_EQUALS_TOL);
 		Assert.assertEquals(0.347334, norm2.getZ(), JglmTesting.DEFAULT_EQUALS_TOL);
