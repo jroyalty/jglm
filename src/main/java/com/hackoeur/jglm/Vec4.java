@@ -62,6 +62,13 @@ public class Vec4 extends AbstractVec {
 		this.w = 0f;
 	}
 	
+	public Vec4(final Vec3 other, final float w) {
+		this.x = other.x;
+		this.y = other.y;
+		this.z = other.z;
+		this.w = w;
+	}
+	
 	@Override
 	public int getDimensions() {
 		return 4;
