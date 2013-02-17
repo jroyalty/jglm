@@ -82,6 +82,21 @@ public final class Mat4 extends AbstractMat {
 	}
 	
 	/**
+	 * Create a matrix using the given 4-elements vectors as <em>columns</em>.
+	 * 
+	 * @param col0 vector for the first column
+	 * @param col1 vector for the second column
+	 * @param col2 vector for the third column
+	 * @param col3 vector for the fourth column
+	 */
+	public Mat4(final Vec4 col0, final Vec4 col1, final Vec4 col2, final Vec4 col3) {
+		this.m00 = col0.x; this.m10 = col1.x; this.m20 = col2.x; this.m30 = col3.x;
+		this.m01 = col0.y; this.m11 = col1.y; this.m21 = col2.y; this.m31 = col3.y;
+		this.m02 = col0.z; this.m12 = col1.z; this.m22 = col2.z; this.m32 = col3.z;
+		this.m03 = col0.w; this.m13 = col1.w; this.m23 = col2.w; this.m33 = col3.w;
+	}
+	
+	/**
 	 * Creates a matrix using successive 4-tuples as <em>columns</em>.
 	 *
 	 * @param x00 first column, x
