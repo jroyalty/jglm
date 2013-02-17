@@ -24,7 +24,10 @@ import com.hackoeur.jglm.support.Precision;
  * 
  * @author James Royalty
  */
-public class Mat4 extends AbstractMat {
+public final class Mat4 extends AbstractMat {
+	public static final Mat4 MAT4_ZERO = new Mat4();
+	public static final Mat4 MAT4_IDENTITY = new Mat4(1.0f);
+	
 	/* ::-------------------------------------------------------------------------:: 
 	 * COLUMN MAJOR LAYOUT: The first index indicates the COLUMN NUMBER.
 	 * The second is the ROW NUMBER.
