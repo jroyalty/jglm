@@ -17,11 +17,22 @@ package com.hackoeur.jglm;
 import com.hackoeur.jglm.support.FastMath;
 
 /**
+ * Utility methods that replace OpenGL and GLU matrix functions there were 
+ * deprecated in GL 3.0.
+ * 
  * @author James Royalty
  */
-public final class Matrices
-{
-	public static Mat4 perspective(final float fovy, final float aspect, final float zNear, final float zFar) {
+public final class Matrices {
+	/**
+	 * Creates a perspective transformation matrix.
+	 * 
+	 * @param fovy field-of-view angle, in <em>degrees</em>
+	 * @param aspect aspect ratio
+	 * @param zNear near plane
+	 * @param zFar far plane
+	 * @return
+	 */
+	public static final Mat4 perspective(final float fovy, final float aspect, final float zNear, final float zFar) {
 		final float halfFovyRadians = (float) FastMath.toRadians( (fovy / 2.0f) );
 		final float range = (float) FastMath.tan(halfFovyRadians) * zNear;
 		final float left = -range * aspect;
@@ -37,7 +48,7 @@ public final class Matrices
 		);
 	}
 	
-	public static Mat4 frustum(final float left, final float right, final float bottom, final float top, final float nearVal, final float farVal) {
+	public static final Mat4 frustum(final float left, final float right, final float bottom, final float top, final float nearVal, final float farVal) {
 		final float m00 = (2f * nearVal) / (right - left);
 		final float m11 = (2f * nearVal) / (top - bottom);
 		final float m20 = (right + left) / (right - left);
@@ -54,7 +65,7 @@ public final class Matrices
 		);
 	}
 	
-	public static Mat4 ortho(final float left, final float right, final float bottom, final float top, final float zNear, final float zFar) {
+	public static final Mat4 ortho(final float left, final float right, final float bottom, final float top, final float zNear, final float zFar) {
 		final float m00 = 2f / (right - left);
 		final float m11 = 2f / (top - bottom);
 		final float m22 = -2f / (zFar - zNear);
@@ -70,7 +81,7 @@ public final class Matrices
 		);
 	}
 	
-	public static Mat4 ortho2d(final float left, final float right, final float bottom, final float top) {
+	public static final Mat4 ortho2d(final float left, final float right, final float bottom, final float top) {
 		final float m00 = 2f / (right - left);
 		final float m11 = 2f / (top - bottom);
 		final float m22 = -1f;
