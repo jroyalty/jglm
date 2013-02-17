@@ -30,7 +30,7 @@ public class Mat3Test {
 	}
 	
 	@Test
-	public void testNewWithVector() {
+	public void testNewWithVec3() {
 		Vec3 v1 = new Vec3(1f, 2f, 3f);
 		Vec3 v2 = new Vec3(4f, 5f, 6f);
 		Vec3 v3 = new Vec3(7f, 8f, 9f);
