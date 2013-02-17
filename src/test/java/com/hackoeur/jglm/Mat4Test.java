@@ -119,4 +119,20 @@ public class Mat4Test {
 		
 		Assert.assertEquals(m1, m2);
 	}
+	
+	@Test
+	public void testTranspose() {
+		Mat4 m1 = new Mat4(
+				1f, 2f, 3f, 4f,
+				5f, 6f, 7f, 8f,
+				9f, 10f, 11f, 12f,
+				13f, 14f, 15f, 16f
+		);
+		
+		Mat4 m1T = m1.transpose();
+		Assert.assertFalse(m1.equals(m1T));
+		
+		Mat4 m1T_T = m1T.transpose();
+		Assert.assertEquals(m1, m1T_T);
+	}
 }
