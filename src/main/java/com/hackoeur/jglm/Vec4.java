@@ -22,7 +22,7 @@ import com.hackoeur.jglm.support.Precision;
 /**
  * @author James Royalty
  */
-public class Vec4 extends AbstractVec {
+public final class Vec4 extends AbstractVec {
 	public static final Vec4 VEC4_ZERO = new Vec4();
 	
 	final float x, y, z, w;
