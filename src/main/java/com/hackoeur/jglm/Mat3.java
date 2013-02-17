@@ -149,7 +149,8 @@ public class Mat3 extends AbstractMat {
 	 * | 3 6 9 |
 	 * </pre>
 	 * 
-	 * @param mat
+	 * @param mat array containing <em>at least</em> 9 elements.  It's okay if
+	 * the given array is larger than 9 elements; those elements will be ignored.
 	 */
 	public Mat3(final float[] mat) {
 		assert mat.length >= 9 : "Invalid matrix array length";
