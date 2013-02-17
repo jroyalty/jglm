@@ -24,7 +24,7 @@ import com.hackoeur.jglm.support.Precision;
  * 
  * @author James Royalty
  */
-public class Mat3 extends AbstractMat {
+public final class Mat3 extends AbstractMat {
 	public static final Mat3 MAT3_ZERO = new Mat3();
 	public static final Mat3 MAT3_IDENTITY = new Mat3(1.0f);
 	
