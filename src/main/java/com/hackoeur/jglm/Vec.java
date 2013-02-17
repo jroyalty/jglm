@@ -17,6 +17,8 @@ package com.hackoeur.jglm;
 import java.nio.FloatBuffer;
 
 /**
+ * A single precision floating point vector.
+ * 
  * @author James Royalty
  */
 public interface Vec {
