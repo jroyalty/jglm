@@ -49,6 +49,186 @@ public class Mat4 extends AbstractMat {
 		m03 = m13 = m23 = m33 = 0f;
 	}
 	
+	/**
+	 * Creates a matrix with the given value along the diagonal.
+	 * 
+	 * @param diagonalValue
+	 */
+	public Mat4(final float diagonalValue) {
+		m00 = m11 = m22 = m33 = diagonalValue;
+		m01 = m02 = m03 = 0f;
+		m10 = m12 = m13 = 0f;
+		m20 = m21 = m23 = 0f;
+		m30 = m31 = m32 = 0f;
+	}
+	
+	/**
+	 * Create a matrix using the given 3-elements vectors as <em>columns</em>.  The fourth 
+	 * element of each given vector will be set to zero.
+	 * 
+	 * @param col0 vector for the first column
+	 * @param col1 vector for the second column
+	 * @param col2 vector for the third column
+	 * @param col3 vector for the fourth column
+	 */
+	public Mat4(final Vec3 col0, final Vec3 col1, final Vec3 col2, final Vec3 col3) {
+		this.m00 = col0.x; this.m10 = col1.x; this.m20 = col2.x; this.m30 = col3.x;
+		this.m01 = col0.y; this.m11 = col1.y; this.m21 = col2.y; this.m31 = col3.y;
+		this.m02 = col0.z; this.m12 = col1.z; this.m22 = col2.z; this.m32 = col3.z;
+		this.m03 = 0f;     this.m13 = 0f;     this.m23 = 0f;     this.m33 = 0f;
+	}
+	
+	/**
+	 * Creates a matrix using successive 4-tuples as <em>columns</em>.
+	 *
+	 * @param x00 first column, x
+	 * @param x01 first column, y
+	 * @param x02 first column, z
+	 * @param x03 first column, w
+	 * @param x10 second column, x
+	 * @param x11 second column, y
+	 * @param x12 second column, z
+	 * @param x13 second column, w
+	 * @param x20 third column, x
+	 * @param x21 third column, y
+	 * @param x22 third column, z
+	 * @param x23 third column, w
+	 * @param x30 fourth column, x
+	 * @param x31 fourth column, y
+	 * @param x32 fourth column, z
+	 * @param x33 fourth column, w
+	 */
+	public Mat4(
+			final float x00, final float x01, final float x02, final float x03,
+			final float x10, final float x11, final float x12, final float x13,
+			final float x20, final float x21, final float x22, final float x23,
+			final float x30, final float x31, final float x32, final float x33) {
+		// Col 1
+		this.m00 = x00;
+		this.m01 = x01;
+		this.m02 = x02;
+		this.m03 = x03;
+		
+		// Col 2
+		this.m10 = x10;
+		this.m11 = x11;
+		this.m12 = x12;
+		this.m13 = x13;
+		
+		// Col 3
+		this.m20 = x20;
+		this.m21 = x21;
+		this.m22 = x22;
+		this.m23 = x23;
+		
+		// Col 4
+		this.m30 = x30;
+		this.m31 = x31;
+		this.m32 = x32;
+		this.m33 = x33;
+	}
+	
+	/**
+	 * Creates a matrix using successive 4-tuples as <em>columns</em>.
+	 * 
+	 * @param mat array containing <em>at least</em> 16 elements.  It's okay if
+	 * the given array is larger than 16 elements; those elements will be ignored.
+	 */
+	public Mat4(final float[] mat) {
+		assert mat.length >= 16 : "Invalid matrix array length";
+		
+		int i = 0;
+		
+		// Col 1
+		m00 = mat[i++];
+		m01 = mat[i++];
+		m02 = mat[i++];
+		m03 = mat[i++];
+		
+		// Col 2
+		m10 = mat[i++];
+		m11 = mat[i++];
+		m12 = mat[i++];
+		m13 = mat[i++];
+		
+		// Col 3
+		m20 = mat[i++];
+		m21 = mat[i++];
+		m22 = mat[i++];
+		m23 = mat[i++];
+		
+		// Col 4
+		m30 = mat[i++];
+		m31 = mat[i++];
+		m32 = mat[i++];
+		m33 = mat[i++];
+	}
+	
+	/**
+	 * Creates a matrix using successive 4-tuples as <em>columns</em>.  The semantics
+	 * are the same as the float array constructor.
+	 * 
+	 * @param buffer
+	 */
+	public Mat4(final FloatBuffer buffer) {
+		assert buffer.capacity() >= 16 : "Invalid matrix buffer length";
+		
+		final int startPos = buffer.position();
+		
+		// Col 1
+		m00 = buffer.get();
+		m01 = buffer.get();
+		m02 = buffer.get();
+		m03 = buffer.get();
+		
+		// Col 2
+		m10 = buffer.get();
+		m11 = buffer.get();
+		m12 = buffer.get();
+		m13 = buffer.get();
+		
+		// Col 3
+		m20 = buffer.get();
+		m21 = buffer.get();
+		m22 = buffer.get();
+		m23 = buffer.get();
+		
+		// Col 4
+		m30 = buffer.get();
+		m31 = buffer.get();
+		m32 = buffer.get();
+		m33 = buffer.get();
+		
+		buffer.position(startPos);
+	}
+	
+	/**
+	 * Creates a matrix that is a copy of the given matrix.
+	 * 
+	 * @param mat matrix to copy
+	 */
+	public Mat4(final Mat4 mat) {
+		this.m00 = mat.m00;
+		this.m01 = mat.m01;
+		this.m02 = mat.m02;
+		this.m03 = mat.m03;
+		
+		this.m10 = mat.m10;
+		this.m11 = mat.m11;
+		this.m12 = mat.m12;
+		this.m13 = mat.m13;
+		
+		this.m20 = mat.m20;
+		this.m21 = mat.m21;
+		this.m22 = mat.m22;
+		this.m23 = mat.m23;
+		
+		this.m30 = mat.m30;
+		this.m31 = mat.m31;
+		this.m32 = mat.m32;
+		this.m33 = mat.m33;
+	}
+	
 	@Override
 	public int getNumRows() {
 		return 4;
