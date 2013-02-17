@@ -120,7 +120,7 @@ public class Vec3Test {
 	public void testAngle() {
 		final Vec3 v1 = new Vec3(0f, 1f, 0f);
 		final Vec3 v2 = new Vec3(1f, 0f, 0f);
-		Assert.assertEquals(FastMath.toRadians(90d), v1.angle(v2), JglmTesting.DEFAULT_EQUALS_TOL);
+		Assert.assertEquals(FastMath.toRadians(90d), v1.angleInRadians(v2), JglmTesting.DEFAULT_EQUALS_TOL);
 	}
 	
 	@Test

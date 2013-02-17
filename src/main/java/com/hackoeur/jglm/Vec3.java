@@ -106,7 +106,7 @@ public final class Vec3 extends AbstractVec {
 	 * @param vec
 	 * @return the angle between this and the given vector, in <em>radians</em>.
 	 */
-	public float angle(final Vec3 vec) {
+	public float angleInRadians(final Vec3 vec) {
 		final float dot = dot(vec);
 		final float lenSq = FastMath.sqrtFast( getLengthSquared() * vec.getLengthSquared() );
 		return (float) FastMath.acos( dot / lenSq );
