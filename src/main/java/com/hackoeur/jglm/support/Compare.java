@@ -15,9 +15,16 @@
 package com.hackoeur.jglm.support;
 
 /**
+ * <strong>NOTE:</strong> Some of the code in this class has been pulled from the 
+ * Apache Commons-Math library.  That library is covered by the Apache v2
+ * license.  See the <code>NOTICE.TXT</code> file for more information.
+ * 
  * @author James Royalty
  */
 public final class Compare {
+	/** Offset to order signed double numbers lexicographically. */
+    private static final int SGN_MASK_FLOAT = 0x80000000; // From Commons-Math.
+    
 	/** Absolute epsilon value. */
 	public static final float ABS_EPSILON;
 	
@@ -28,13 +35,61 @@ public final class Compare {
 	public static final float MAT_EPSILON;
 	
 	static {
-		String s = System.getProperty("jglm.absEpsilon", "1.192092896e-07");
-		ABS_EPSILON = Float.parseFloat(s);
+		ABS_EPSILON = JglmConfig.getFloatProperty("absEpsilon", 1.192092896e-07f);
+		VEC_EPSILON = JglmConfig.getFloatProperty("vecRelEpsilon", 0.00001f);
+		MAT_EPSILON = JglmConfig.getFloatProperty("matRelEpsilon", 0.00001f);
+	}
+	
+	
+	public static boolean equalsZero(final float a) {
+		/* Pulled from Precision.java in Commons-Math. */
 		
-		s = System.getProperty("jglm.vecEpsilon", "0.00001");
-		VEC_EPSILON = Float.parseFloat(s);
+		return equalsUlps(a, 0f, 1) || FastMath.abs(a) <= ABS_EPSILON;
+	}
+	
+	public static boolean equals(final float a, final float b, final float relativeEpsilon) {
+		return equals(a, b, ABS_EPSILON, relativeEpsilon);
+	}
+	
+	public static boolean equals(final float a, final float b, final float absoluteEpsilon, final float relativeEpsilon) {
+		/* Abstracted from http://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/ */
 		
-		s = System.getProperty("jglm.matEpsilon", "0.00001");
-		MAT_EPSILON = Float.parseFloat(s);
+		// Short-cut.
+		if (equalsUlps(a, b, 1)) {
+            return true;
+        }
+		
+		final float diff = FastMath.abs(a - b);
+		
+		// Short-cut for comparing with ZERO.
+		if (diff <= absoluteEpsilon) {
+			return true;
+		}
+		
+		final float absA = FastMath.abs(a);
+		final float absB = FastMath.abs(b);
+		
+		final float largest = (absB > absA) ? absB : absA;
+		
+		return ( diff <= (largest * relativeEpsilon) );
+	}
+	
+	public static boolean equalsUlps(final float a, final float b, final int maxUlps) {
+		/* Pulled from Precision.java in Commons-Math. */
+		
+		int xInt = Float.floatToIntBits(a);
+        int yInt = Float.floatToIntBits(b);
+
+        // Make lexicographically ordered as a two's-complement integer.
+        if (xInt < 0) {
+            xInt = SGN_MASK_FLOAT - xInt;
+        }
+        if (yInt < 0) {
+            yInt = SGN_MASK_FLOAT - yInt;
+        }
+
+        final boolean isEqual = FastMath.abs(xInt - yInt) <= maxUlps;
+
+        return isEqual && !Float.isNaN(a) && !Float.isNaN(b);
 	}
 }
