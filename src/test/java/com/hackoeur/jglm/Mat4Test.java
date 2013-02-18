@@ -121,6 +121,41 @@ public class Mat4Test {
 	}
 	
 	@Test
+	public void testPureTranslate() {
+		Vec3 vec = new Vec3(10.0f, 20.0f, 30.0f);
+		Mat4 matTrans = Mat4.MAT4_IDENTITY.translate(vec);
+		Mat4 expectedTrans = new Mat4(
+				new Vec4(1f, 0f, 0f, 0f),
+				new Vec4(0f, 1f, 0f, 0f),
+				new Vec4(0f, 0f, 1f, 0f),
+				new Vec4(vec, 1f)
+		);
+		
+		Assert.assertEquals(expectedTrans, matTrans);
+	}
+	
+	@Test
+	public void testTranslate() {
+		Mat4 m1 = new Mat4(
+				1f, 2f, 3f, 4f,
+				5f, 6f, 7f, 8f,
+				9f, 10f, 11f, 12f,
+				13f, 14f, 15f, 16f
+		);
+		
+		Vec3 translation = new Vec3(10.0f, 1.0f, 2.0f);
+		Mat4 matTrans = m1.translate(translation);
+		
+		Mat4 expectedTrans = new Mat4(
+				1f, 2f, 3f, 4f,
+				5f, 6f, 7f, 8f,
+				9f, 10f, 11f, 12f,
+				46f, 60f, 74f, 88f);
+		
+		Assert.assertEquals(expectedTrans, matTrans);
+	}
+	
+	@Test
 	public void testTranspose() {
 		Mat4 m1 = new Mat4(
 				1f, 2f, 3f, 4f,

@@ -337,6 +337,22 @@ public final class Mat4 extends AbstractMat {
 				&& Compare.equalsZero(m33);
 	}
 	
+	public Mat4 translate(final Vec3 translation) {
+		Vec4 v0 = new Vec4(m00 * translation.x, m01 * translation.x, m02 * translation.x, m03 * translation.x);
+		Vec4 v1 = new Vec4(m10 * translation.y, m11 * translation.y, m12 * translation.y, m13 * translation.y);
+		Vec4 v2 = new Vec4(m20 * translation.z, m21 * translation.z, m22 * translation.z, m23 * translation.z);
+		Vec4 v3 = new Vec4(m30, m31, m32, m33);
+		
+		Vec4 result = v0.add(v1).add(v2).add(v3);
+		
+		return new Mat4(
+				m00, m01, m02, m03,
+				m10, m11, m12, m13,
+				m20, m21, m22, m23,
+				result.x, result.y, result.z, result.w
+		);
+	}
+	
 	public Mat4 transpose() {
 		return new Mat4(
 				m00, m10, m20, m30,
