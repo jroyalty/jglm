@@ -28,10 +28,12 @@ public final class Matrices {
 	 * aspect ratio to determine the left, right, top, bottom planes.  This
 	 * method is analogous to the now deprecated {@code gluPerspective} method.
 	 * 
-	 * @param fovy field-of-view angle, in <em>degrees</em>
-	 * @param aspect aspect ratio
-	 * @param zNear near plane
-	 * @param zFar far plane
+	 * @param fovy field of view angle, in degrees, in the {@code y} direction
+	 * @param aspect aspect ratio that determines the field of view in the x 
+	 * direction.  The aspect ratio is the ratio of {@code x} (width) to 
+	 * {@code y} (height).
+	 * @param zNear near plane distance from the viewer to the near clipping plane (always positive)
+	 * @param zFar far plane distance from the viewer to the far clipping plane (always positive)
 	 * @return
 	 */
 	public static final Mat4 perspective(final float fovy, final float aspect, final float zNear, final float zFar) {
@@ -55,12 +57,12 @@ public final class Matrices {
 	 * values for all clipping planes.  This method is analogous to the now
 	 * deprecated {@code glFrustum} method.
 	 * 
-	 * @param left
-	 * @param right
-	 * @param bottom
-	 * @param top
-	 * @param nearVal
-	 * @param farVal
+	 * @param left left vertical clipping plane
+	 * @param right right vertical clipping plane
+	 * @param bottom bottom horizontal clipping plane
+	 * @param top top horizontal clipping plane
+	 * @param nearVal distance to the near depth clipping plane (must be positive)
+	 * @param farVal distance to the far depth clipping plane (must be positive)
 	 * @return
 	 */
 	public static final Mat4 frustum(final float left, final float right, final float bottom, final float top, final float nearVal, final float farVal) {
@@ -81,15 +83,38 @@ public final class Matrices {
 	}
 	
 	/**
+	 * Defines a viewing transformation.  This method is analogous to the now
+	 * deprecated {@code gluLookAt} method.
+	 * 
+	 * @param eye position of the eye point
+	 * @param center position of the reference point
+	 * @param up direction of the up vector
+	 * @return
+	 */
+	public static final Mat4 lookAt(final Vec3 eye, final Vec3 center, final Vec3 up) {
+		final Vec3 f = center.subtract(eye).getUnitVector();
+		Vec3 u = up.getUnitVector();
+		final Vec3 s = f.cross(u).getUnitVector();
+		u = s.cross(f);
+		
+		return new Mat4(
+				s.x, u.x, -f.x, 0f,
+				s.y, u.y, -f.y, 0f,
+				s.z, u.z, -f.z, 0f,
+				-s.dot(eye), -u.dot(eye), f.dot(eye), 1f
+		);
+	}
+	
+	/**
 	 * Creates an orthographic projection matrix.  This method is analogous to the now
 	 * deprecated {@code glOrtho} method.
 	 * 
-	 * @param left
-	 * @param right
-	 * @param bottom
-	 * @param top
-	 * @param zNear
-	 * @param zFar
+	 * @param left left vertical clipping plane
+	 * @param right right vertical clipping plane
+	 * @param bottom bottom horizontal clipping plane
+	 * @param top top horizontal clipping plane
+	 * @param zNear distance to nearer depth clipping plane (negative if the plane is to be behind the viewer)
+	 * @param zFar distance to farther depth clipping plane (negative if the plane is to be behind the viewer)
 	 * @return
 	 */
 	public static final Mat4 ortho(final float left, final float right, final float bottom, final float top, final float zNear, final float zFar) {
@@ -112,10 +137,10 @@ public final class Matrices {
 	 * Creates a 2D orthographic projection matrix.  This method is analogous to the now
 	 * deprecated {@code gluOrtho2D} method.
 	 * 
-	 * @param left
-	 * @param right
-	 * @param bottom
-	 * @param top
+	 * @param left left vertical clipping plane
+	 * @param right right vertical clipping plane
+	 * @param bottom bottom horizontal clipping plane
+	 * @param top top horizontal clipping plane
 	 * @return
 	 */
 	public static final Mat4 ortho2d(final float left, final float right, final float bottom, final float top) {

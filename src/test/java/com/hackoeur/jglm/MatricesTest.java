@@ -48,6 +48,25 @@ public class MatricesTest {
 	}
 	
 	@Test
+	public void testLookAt() {
+		Mat4 m1 = Matrices.lookAt(
+				new Vec3(1f, 2f, 3f),
+				new Vec3(4f, 5f, 6f),
+				new Vec3(7f, 8f, 9f)
+		);
+		
+		System.out.println(m1);
+		
+		/*
+		 test_lookAt:
+   0.40825   -0.81650    0.40825   -0.00000
+  -0.70711    0.00000    0.70711   -1.41421
+  -0.57735   -0.57735   -0.57735    3.46410
+   0.00000    0.00000    0.00000    1.00000
+		 */
+	}
+	
+	@Test
 	public void testOrtho() {
 		Mat4 m1 = Matrices.ortho(-1.0f, 1.0f, -1.0f, 1.0f, 1.5f, 20.0f);
 		System.out.println(m1);
