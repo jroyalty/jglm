@@ -16,8 +16,8 @@ package com.hackoeur.jglm;
 
 import java.nio.FloatBuffer;
 
+import com.hackoeur.jglm.support.Compare;
 import com.hackoeur.jglm.support.FastMath;
-import com.hackoeur.jglm.support.Precision;
 
 /**
  * @author James Royalty
@@ -197,9 +197,9 @@ public final class Vec3 extends AbstractVec {
 		
 		final Vec3 other = (Vec3) obj;
 		
-		return Precision.equals(x, other.x, epsilon)
-				&& Precision.equals(y, other.y, epsilon)
-				&& Precision.equals(z, other.z, epsilon);
+		return Compare.equals(x, other.x, epsilon)
+				&& Compare.equals(y, other.y, epsilon)
+				&& Compare.equals(z, other.z, epsilon);
 	}
 
 	public String toString() {
