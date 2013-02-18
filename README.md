@@ -2,7 +2,7 @@ JGLM - Java OpenGL Mathematics Library
 ======================================
 
 A *conceptual* port of the [OpenGL Mathematics](http://glm.g-truc.net/) C++ 
-library.  I call this conceptual because a direct port of GLM to Java wouldn't
+library (GLM).  I call this conceptual because a direct port of GLM to Java wouldn't
 make a ton of sense.  So, instead, I've taken the concept of providing some of
 the functionality of [GLSL](http://www.opengl.org/documentation/glsl/) and
 the missing matrix capabilities of modern OpenGL and move those to Java.
