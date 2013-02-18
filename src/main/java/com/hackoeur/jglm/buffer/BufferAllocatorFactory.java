@@ -16,11 +16,13 @@ package com.hackoeur.jglm.buffer;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
-import java.util.ServiceLoader;
+
+import com.hackoeur.jglm.support.JglmConfig;
 
 /**
- * Gets an instance of a {@link BufferAllocator} using the standard Java SPI
- * mechanism.  (See {@link ServiceLoader} for more info.)
+ * Gets an instance of a {@link BufferAllocator}.  There is a pre-configured
+ * default, but users can provide their own by setting the
+ * <code>jglm.BufferAllocatorClass</code> configuration property.
  * 
  * @author James Royalty
  */
@@ -41,25 +43,16 @@ public class BufferAllocatorFactory {
 		}
 	};
 	
-	private static final ServiceLoader<BufferAllocator> LOADER;
 	private static final BufferAllocator DEFAULT_INSTANCE;
 	
 	static {
-		// Load providers, if any.
-		LOADER = ServiceLoader.load(BufferAllocator.class);
-		
-		// We want the first instance only, if one exists.
-		BufferAllocator saved = null;
-		for (final BufferAllocator inst : LOADER) {
-			saved = inst;
-			break;
-		}
-
+		BufferAllocator inst = JglmConfig.getInstancePropertyOrNull("BufferAllocatorClass", BufferAllocator.class);
+			
 		// If we didn't find any providers then use our default instance.
-		if (saved == null) {
+		if (inst == null) {
 			DEFAULT_INSTANCE = new DefaultBufferAllocator();
 		} else {
-			DEFAULT_INSTANCE = saved;
+			DEFAULT_INSTANCE = inst;
 		}
 	}
 	
