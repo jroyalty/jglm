@@ -1,6 +1,7 @@
 package com.hackoeur.jglm;
 
 import java.nio.FloatBuffer;
+import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -91,6 +92,36 @@ public class Mat3Test {
 		Mat3 m1 = new Mat3();
 		Assert.assertEquals(3, m1.getNumRows());
 		Assert.assertEquals(3, m1.getNumColumns());
+	}
+	
+	@Test
+	public void testGetColumn() {
+		Mat3 m1 = new Mat3(
+				1f, 2f, 3f,
+				4f, 5f, 6f,
+				7f, 8f, 9f
+		);
+		
+		Assert.assertEquals(new Vec3(1f, 2f, 3f), m1.getColumn(0));
+		Assert.assertEquals(new Vec3(4f, 5f, 6f), m1.getColumn(1));
+		Assert.assertEquals(new Vec3(7f, 8f, 9f), m1.getColumn(2));
+	}
+	
+	@Test
+	public void testGetColumns() {
+		Mat3 m1 = new Mat3(
+				1f, 2f, 3f,
+				4f, 5f, 6f,
+				7f, 8f, 9f
+		);
+		
+		Iterable<Vec3> cols = m1.getColumns();
+		Iterator<Vec3> iter = cols.iterator();
+		
+		Assert.assertEquals(new Vec3(1f, 2f, 3f), iter.next());
+		Assert.assertEquals(new Vec3(4f, 5f, 6f), iter.next());
+		Assert.assertEquals(new Vec3(7f, 8f, 9f), iter.next());
+		Assert.assertFalse(iter.hasNext());
 	}
 	
 	@Test

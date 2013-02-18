@@ -1,6 +1,7 @@
 package com.hackoeur.jglm;
 
 import java.nio.FloatBuffer;
+import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -118,6 +119,40 @@ public class Mat4Test {
 		Mat4 m2 = new Mat4(m1);
 		
 		Assert.assertEquals(m1, m2);
+	}
+	
+	@Test
+	public void testGetColumn() {
+		Mat4 m1 = new Mat4(
+				1f, 2f, 3f, 4f,
+				5f, 6f, 7f, 8f,
+				9f, 10f, 11f, 12f,
+				13f, 14f, 15f, 16f
+				);
+
+		Assert.assertEquals(new Vec4(1f, 2f, 3f, 4f), m1.getColumn(0));
+		Assert.assertEquals(new Vec4(5f, 6f, 7f, 8f), m1.getColumn(1));
+		Assert.assertEquals(new Vec4(9f, 10f, 11f, 12f), m1.getColumn(2));
+		Assert.assertEquals(new Vec4(13f, 14f, 15f, 16f), m1.getColumn(3));
+	}
+
+	@Test
+	public void testGetColumns() {
+		Mat4 m1 = new Mat4(
+				1f, 2f, 3f, 4f,
+				5f, 6f, 7f, 8f,
+				9f, 10f, 11f, 12f,
+				13f, 14f, 15f, 16f
+				);
+
+		Iterable<Vec4> cols = m1.getColumns();
+		Iterator<Vec4> iter = cols.iterator();
+
+		Assert.assertEquals(new Vec4(1f, 2f, 3f, 4f), iter.next());
+		Assert.assertEquals(new Vec4(5f, 6f, 7f, 8f), iter.next());
+		Assert.assertEquals(new Vec4(9f, 10f, 11f, 12f), iter.next());
+		Assert.assertEquals(new Vec4(13f, 14f, 15f, 16f), iter.next());
+		Assert.assertFalse(iter.hasNext());
 	}
 	
 	@Test
