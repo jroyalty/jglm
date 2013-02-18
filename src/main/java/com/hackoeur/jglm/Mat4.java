@@ -17,7 +17,6 @@ package com.hackoeur.jglm;
 import java.nio.FloatBuffer;
 
 import com.hackoeur.jglm.support.Compare;
-import com.hackoeur.jglm.support.Precision;
 
 /**
  * A 4x4 matrix.
@@ -293,49 +292,49 @@ public final class Mat4 extends AbstractMat {
 	
 	@Override
 	public boolean isIdentity() {
-		return Precision.equals(m00, 1f, Compare.MAT_EPSILON)
-				&& Precision.equals(m11, 1f, Compare.MAT_EPSILON)
-				&& Precision.equals(m22, 1f, Compare.MAT_EPSILON)
-				&& Precision.equals(m33, 1f, Compare.MAT_EPSILON)
+		return Compare.equals(m00, 1f, Compare.MAT_EPSILON)
+				&& Compare.equals(m11, 1f, Compare.MAT_EPSILON)
+				&& Compare.equals(m22, 1f, Compare.MAT_EPSILON)
+				&& Compare.equals(m33, 1f, Compare.MAT_EPSILON)
 				
-				&& Precision.equals(m01, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m02, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m03, 0f, Compare.ABS_EPSILON)
+				&& Compare.equalsZero(m01)
+				&& Compare.equalsZero(m02)
+				&& Compare.equalsZero(m03)
 				
-				&& Precision.equals(m10, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m12, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m13, 0f, Compare.ABS_EPSILON)
+				&& Compare.equalsZero(m10)
+				&& Compare.equalsZero(m12)
+				&& Compare.equalsZero(m13)
 				
-				&& Precision.equals(m20, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m21, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m23, 0f, Compare.ABS_EPSILON)
+				&& Compare.equalsZero(m20)
+				&& Compare.equalsZero(m21)
+				&& Compare.equalsZero(m23)
 		
-				&& Precision.equals(m30, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m31, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m32, 0f, Compare.ABS_EPSILON);
+				&& Compare.equalsZero(m30)
+				&& Compare.equalsZero(m31)
+				&& Compare.equalsZero(m32);
 	}
 	
 	@Override
 	public boolean isZero() {
-		return Precision.equals(m00, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m01, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m02, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m03, 0f, Compare.ABS_EPSILON)
+		return Compare.equalsZero(m00)
+				&& Compare.equalsZero(m01)
+				&& Compare.equalsZero(m02)
+				&& Compare.equalsZero(m03)
 				
-				&& Precision.equals(m10, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m11, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m12, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m13, 0f, Compare.ABS_EPSILON)
+				&& Compare.equalsZero(m10)
+				&& Compare.equalsZero(m11)
+				&& Compare.equalsZero(m12)
+				&& Compare.equalsZero(m13)
 				
-				&& Precision.equals(m20, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m21, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m22, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m23, 0f, Compare.ABS_EPSILON)
+				&& Compare.equalsZero(m20)
+				&& Compare.equalsZero(m21)
+				&& Compare.equalsZero(m22)
+				&& Compare.equalsZero(m23)
 		
-				&& Precision.equals(m30, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m31, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m32, 0f, Compare.ABS_EPSILON)
-				&& Precision.equals(m33, 0f, Compare.ABS_EPSILON);
+				&& Compare.equalsZero(m30)
+				&& Compare.equalsZero(m31)
+				&& Compare.equalsZero(m32)
+				&& Compare.equalsZero(m33);
 	}
 	
 	public Mat4 transpose() {
@@ -449,25 +448,25 @@ public final class Mat4 extends AbstractMat {
 		
 		final Mat4 other = (Mat4) obj;
 		
-		return Precision.equals(m00, other.m00, epsilon)
-				&& Precision.equals(m01, other.m01, epsilon)
-				&& Precision.equals(m02, other.m02, epsilon)
-				&& Precision.equals(m03, other.m03, epsilon)
+		return Compare.equals(m00, other.m00, epsilon)
+				&& Compare.equals(m01, other.m01, epsilon)
+				&& Compare.equals(m02, other.m02, epsilon)
+				&& Compare.equals(m03, other.m03, epsilon)
 				
-				&& Precision.equals(m10, other.m10, epsilon)
-				&& Precision.equals(m11, other.m11, epsilon)
-				&& Precision.equals(m12, other.m12, epsilon)
-				&& Precision.equals(m13, other.m13, epsilon)
+				&& Compare.equals(m10, other.m10, epsilon)
+				&& Compare.equals(m11, other.m11, epsilon)
+				&& Compare.equals(m12, other.m12, epsilon)
+				&& Compare.equals(m13, other.m13, epsilon)
 				
-				&& Precision.equals(m20, other.m20, epsilon)
-				&& Precision.equals(m21, other.m21, epsilon)
-				&& Precision.equals(m22, other.m22, epsilon)
-				&& Precision.equals(m23, other.m23, epsilon)
+				&& Compare.equals(m20, other.m20, epsilon)
+				&& Compare.equals(m21, other.m21, epsilon)
+				&& Compare.equals(m22, other.m22, epsilon)
+				&& Compare.equals(m23, other.m23, epsilon)
 				
-				&& Precision.equals(m30, other.m30, epsilon)
-				&& Precision.equals(m31, other.m31, epsilon)
-				&& Precision.equals(m32, other.m32, epsilon)
-				&& Precision.equals(m33, other.m33, epsilon);
+				&& Compare.equals(m30, other.m30, epsilon)
+				&& Compare.equals(m31, other.m31, epsilon)
+				&& Compare.equals(m32, other.m32, epsilon)
+				&& Compare.equals(m33, other.m33, epsilon);
 	}
 
 	public String toString() {
