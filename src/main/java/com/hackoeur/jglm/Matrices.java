@@ -24,7 +24,9 @@ import com.hackoeur.jglm.support.FastMath;
  */
 public final class Matrices {
 	/**
-	 * Creates a perspective transformation matrix.
+	 * Creates a perspective projection matrix using field-of-view and 
+	 * aspect ratio to determine the left, right, top, bottom planes.  This
+	 * method is analogous to the now deprecated {@code gluPerspective} method.
 	 * 
 	 * @param fovy field-of-view angle, in <em>degrees</em>
 	 * @param aspect aspect ratio
@@ -48,6 +50,19 @@ public final class Matrices {
 		);
 	}
 	
+	/**
+	 * Creates a perspective projection matrix (frustum) using explicit
+	 * values for all clipping planes.  This method is analogous to the now
+	 * deprecated {@code glFrustum} method.
+	 * 
+	 * @param left
+	 * @param right
+	 * @param bottom
+	 * @param top
+	 * @param nearVal
+	 * @param farVal
+	 * @return
+	 */
 	public static final Mat4 frustum(final float left, final float right, final float bottom, final float top, final float nearVal, final float farVal) {
 		final float m00 = (2f * nearVal) / (right - left);
 		final float m11 = (2f * nearVal) / (top - bottom);
@@ -65,6 +80,18 @@ public final class Matrices {
 		);
 	}
 	
+	/**
+	 * Creates an orthographic projection matrix.  This method is analogous to the now
+	 * deprecated {@code glOrtho} method.
+	 * 
+	 * @param left
+	 * @param right
+	 * @param bottom
+	 * @param top
+	 * @param zNear
+	 * @param zFar
+	 * @return
+	 */
 	public static final Mat4 ortho(final float left, final float right, final float bottom, final float top, final float zNear, final float zFar) {
 		final float m00 = 2f / (right - left);
 		final float m11 = 2f / (top - bottom);
@@ -81,6 +108,16 @@ public final class Matrices {
 		);
 	}
 	
+	/**
+	 * Creates a 2D orthographic projection matrix.  This method is analogous to the now
+	 * deprecated {@code gluOrtho2D} method.
+	 * 
+	 * @param left
+	 * @param right
+	 * @param bottom
+	 * @param top
+	 * @return
+	 */
 	public static final Mat4 ortho2d(final float left, final float right, final float bottom, final float top) {
 		final float m00 = 2f / (right - left);
 		final float m11 = 2f / (top - bottom);
