@@ -46,6 +46,10 @@ public interface Mat {
 	
 	int getNumColumns();
 	
+	<T extends Vec> T getColumn(int columnIndex);
+	
+	<T extends Vec> Iterable<T> getColumns();
+	
 	boolean isIdentity();
 	
 	boolean isZero();
