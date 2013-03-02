@@ -121,6 +121,14 @@ public final class Vec3 extends AbstractVec {
 		);
 	}
 	
+	public Vec4 toDirection() {
+		return new Vec4(x, y, z, 0f);
+	}
+	
+	public Vec4 toPoint() {
+		return new Vec4(x, y, z, 1f);
+	}
+	
 	@Override
 	public FloatBuffer getBuffer() {
 		final FloatBuffer buffer = allocateFloatBuffer();
