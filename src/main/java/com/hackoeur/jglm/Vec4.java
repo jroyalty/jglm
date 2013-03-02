@@ -41,25 +41,11 @@ public final class Vec4 extends AbstractVec {
 		this.w = w;
 	}
 	
-	public Vec4(final float x, final float y, final float z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.w = 0f;
-	}
-	
 	public Vec4(final Vec4 other) {
 		this.x = other.x;
 		this.y = other.y;
 		this.z = other.z;
 		this.w = other.w;
-	}
-	
-	public Vec4(final Vec3 other) {
-		this.x = other.x;
-		this.y = other.y;
-		this.z = other.z;
-		this.w = 0f;
 	}
 	
 	public Vec4(final Vec3 other, final float w) {
@@ -95,16 +81,8 @@ public final class Vec4 extends AbstractVec {
 		return new Vec4( x + vec.x, y + vec.y, z + vec.z, w + vec.w );
 	}
 	
-	public Vec4 add(final Vec3 vec) {
-		return new Vec4( x + vec.x, y + vec.y, z + vec.z );
-	}
-	
 	public Vec4 subtract(final Vec4 vec) {
 		return new Vec4( x - vec.x, y - vec.y, z - vec.z, w - vec.w );
-	}
-	
-	public Vec4 subtract(final Vec3 vec) {
-		return new Vec4( x - vec.x, y - vec.y, z - vec.z );
 	}
 	
 	public Vec4 multiply(final float scalar) {
@@ -117,10 +95,6 @@ public final class Vec4 extends AbstractVec {
 	
 	public float dot(final Vec4 vec) {
 		return this.x * vec.x + this.y * vec.y + this.z * vec.z + this.w * vec.w;
-	}
-	
-	public float dot(final Vec3 vec) {
-		return this.x * vec.x + this.y * vec.y + this.z * vec.z;
 	}
 	
 	public float getX() {
