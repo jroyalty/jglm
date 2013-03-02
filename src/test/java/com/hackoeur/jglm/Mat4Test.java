@@ -59,24 +59,6 @@ public class Mat4Test {
 	}
 	
 	@Test
-	public void testNewWithVec3() {
-		Vec3 v1 = new Vec3(1f, 2f, 3f);
-		Vec3 v2 = new Vec3(4f, 5f, 6f);
-		Vec3 v3 = new Vec3(7f, 8f, 9f);
-		Vec3 v4 = new Vec3(10f, 11f, 12f);
-		
-		Mat4 m1 = new Mat4(v1, v2, v3, v4);
-		Mat4 m2 = new Mat4(
-				1f, 2f, 3f, 0f,
-				4f, 5f, 6f, 0f,
-				7f, 8f, 9f, 0f,
-				10f, 11f, 12f, 0f
-		);
-		
-		Assert.assertEquals(m2, m1);
-	}
-	
-	@Test
 	public void testNewWithArray() {
 		Mat4 m1 = new Mat4(new float[] { 1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 10f, 11f, 12f, 13f, 14f, 15f, 16f } );
 		Mat4 m2 = new Mat4(
