@@ -370,6 +370,62 @@ public final class Mat4 extends AbstractMat {
 				&& Compare.equalsZero(m32)
 				&& Compare.equalsZero(m33);
 	}
+        
+        /**
+         * Multiply this matrix with another and return the result.
+         * @param other
+         */
+        public Mat4 multiply(final Mat4 right) {            
+            float nm00 = this.m00 * right.m00 + this.m10 * right.m01 + this.m20 * right.m02 + this.m30 * right.m03;
+            float nm01 = this.m01 * right.m00 + this.m11 * right.m01 + this.m21 * right.m02 + this.m31 * right.m03;
+            float nm02 = this.m02 * right.m00 + this.m12 * right.m01 + this.m22 * right.m02 + this.m32 * right.m03;
+            float nm03 = this.m03 * right.m00 + this.m13 * right.m01 + this.m23 * right.m02 + this.m33 * right.m03;
+            float nm10 = this.m00 * right.m10 + this.m10 * right.m11 + this.m20 * right.m12 + this.m30 * right.m13;
+            float nm11 = this.m01 * right.m10 + this.m11 * right.m11 + this.m21 * right.m12 + this.m31 * right.m13;
+            float nm12 = this.m02 * right.m10 + this.m12 * right.m11 + this.m22 * right.m12 + this.m32 * right.m13;
+            float nm13 = this.m03 * right.m10 + this.m13 * right.m11 + this.m23 * right.m12 + this.m33 * right.m13;
+            float nm20 = this.m00 * right.m20 + this.m10 * right.m21 + this.m20 * right.m22 + this.m30 * right.m23;
+            float nm21 = this.m01 * right.m20 + this.m11 * right.m21 + this.m21 * right.m22 + this.m31 * right.m23;
+            float nm22 = this.m02 * right.m20 + this.m12 * right.m21 + this.m22 * right.m22 + this.m32 * right.m23;
+            float nm23 = this.m03 * right.m20 + this.m13 * right.m21 + this.m23 * right.m22 + this.m33 * right.m23;
+            float nm30 = this.m00 * right.m30 + this.m10 * right.m31 + this.m20 * right.m32 + this.m30 * right.m33;
+            float nm31 = this.m01 * right.m30 + this.m11 * right.m31 + this.m21 * right.m32 + this.m31 * right.m33;
+            float nm32 = this.m02 * right.m30 + this.m12 * right.m31 + this.m22 * right.m32 + this.m32 * right.m33;
+            float nm33 = this.m03 * right.m30 + this.m13 * right.m31 + this.m23 * right.m32 + this.m33 * right.m33;
+            
+            return new Mat4(
+                            nm00, nm01, nm02, nm03,
+                            nm10, nm11, nm12, nm13,
+                            nm20, nm21, nm22, nm23,
+                            nm30, nm31, nm32, nm33
+            );
+        }
+        
+        /**
+         * Subtract other matrix from this one and return the result ( this - right )
+         * @param right
+         */
+        public Mat4 subtract(final Mat4 right) {
+            return new Mat4(
+                            m00 - right.m00, m01 - right.m01, m02 - right.m02, m03 - right.m03,
+                            m10 - right.m10, m11 - right.m11, m12 - right.m12, m13 - right.m13,
+                            m20 - right.m20, m21 - right.m21, m22 - right.m22, m23 - right.m23,
+                            m30 - right.m30, m31 - right.m31, m32 - right.m32, m33 - right.m33
+            );
+        }
+        
+        /**
+         * Add two matrices together and return the result
+         * @param other
+         */
+        public Mat4 add(final Mat4 other) {
+            return new Mat4(
+                            m00 + other.m00, m01 + other.m01, m02 + other.m02, m03 + other.m03,
+                            m10 + other.m10, m11 + other.m11, m12 + other.m12, m13 + other.m13,
+                            m20 + other.m20, m21 + other.m21, m22 + other.m22, m23 + other.m23,
+                            m30 + other.m30, m31 + other.m31, m32 + other.m32, m33 + other.m33
+            );
+        }
 	
 	public Mat4 translate(final Vec3 translation) {
 		Vec4 v0 = new Vec4(m00 * translation.x, m01 * translation.x, m02 * translation.x, m03 * translation.x);
