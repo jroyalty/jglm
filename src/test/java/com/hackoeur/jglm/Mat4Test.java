@@ -150,6 +150,88 @@ public class Mat4Test {
 		
 		Assert.assertEquals(expectedTrans, matTrans);
 	}
+        
+        @Test
+        public void testMultiplication() {
+            Mat4 m1 = new Mat4(
+                            49.f, 23.f, 5.f, 86.f,
+                            50.f, 90.f, 47.f, 88.f,
+                            29.f, 45.f, 46.f, 20.f,
+                            12.f, 32.f, 89.f, 58.f
+            );
+            
+            Mat4 m2 = new Mat4(
+                            54.f, 19.f, 25.f, 82.f,
+                            43.f, 25.f, 51.f, 91.f,
+                            28.f, 36.f, 24.f, 56.f,
+                            64.f, 68.f, 96.f, 41.f
+            );
+            
+            Mat4 expectedMul = new Mat4(
+                    5305.f, 6701.f, 9611.f, 11572.f,
+                    5928.f, 8446.f, 11835.f, 12196.f,
+                    4540.f, 6756.f, 7920.f, 9304.f,
+                    9812.f, 13224.f, 11581.f, 15786.f
+            );
+            
+            Mat4 multiplied = m1.multiply(m2);
+            
+            Assert.assertEquals(expectedMul, multiplied);
+        }
+        
+        @Test
+        public void testAddition() {
+            Mat4 a1 = new Mat4(
+                            49.f, 23.f, 5.f, 86.f,
+                            50.f, 90.f, 47.f, 88.f,
+                            29.f, 45.f, 46.f, 20.f,
+                            12.f, 32.f, 89.f, 58.f
+            );
+            
+            Mat4 a2 = new Mat4(
+                            54.f, 19.f, 25.f, 82.f,
+                            43.f, 25.f, 51.f, 91.f,
+                            28.f, 36.f, 24.f, 56.f,
+                            0.f, 68.f, 96.f, 41.f
+            );
+            
+            Mat4 expectedAdded = new Mat4(
+                            103.f, 42.f, 30.f, 168.f,
+                            93.f, 115.f, 98.f, 179.f,
+                            57, 81.f, 70.f, 76.f,
+                            12.f, 100.f, 185.f, 99.f
+            );
+            
+            Assert.assertEquals(expectedAdded, a1.add(a2));
+        }
+        
+        @Test
+        public void testSubtraction() {
+            Mat4 m1 = new Mat4(
+                            49.f, 23.f, 5.f, 86.f,
+                            50.f, 90.f, 47.f, 88.f,
+                            29.f, 45.f, 46.f, 20.f,
+                            12.f, 32.f, 89.f, 58.f
+            );
+            
+            Mat4 m2 = new Mat4(
+                            54.f, 19.f, 25.f, 82.f,
+                            43.f, 25.f, 51.f, 91.f,
+                            28.f, 36.f, 24.f, 56.f,
+                            64.f, 68.f, 96.f, 41.f
+            );
+            
+            Mat4 expectedSub = new Mat4(
+                    -5.f, 4.f, -20.f, 4.f,
+                    7.f, 65.f, -4.f, -3.f,
+                    1.f, 9.f, 22.f, -36.f,
+                    -52.f, -36.f, -7.f, 17.f
+            );
+            
+            Mat4 subtracted = m1.subtract(m2);
+            
+            Assert.assertEquals(expectedSub, subtracted);
+        }
 	
 	@Test
 	public void testTranslate() {
