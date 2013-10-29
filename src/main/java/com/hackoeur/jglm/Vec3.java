@@ -140,6 +140,14 @@ public final class Vec3 extends AbstractVec {
 		
 		return buffer;
 	}
+	/**
+	 * Get the coordinates of this Vec3 as a float array.
+	 *
+	 * @return new float[]{x, y, z};
+	 */
+	public float[] getArray() {
+		return new float[]{x, y, z};
+	}
 
 	public float getX() {
 		return x;
@@ -210,6 +218,7 @@ public final class Vec3 extends AbstractVec {
 				&& Compare.equals(z, other.z, epsilon);
 	}
 
+	@Override
 	public String toString() {
 		return new StringBuilder()
 			.append(getClass().getSimpleName())

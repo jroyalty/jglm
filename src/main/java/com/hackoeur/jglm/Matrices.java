@@ -157,4 +157,26 @@ public final class Matrices {
 				m30, m31, 0f, 1f
 		);
 	}
+
+	/**
+	 * Creates a rotation matrix for the given angle (in rad) around the given
+	 * axis.
+	 *
+	 * @param phi The angle (in rad).
+	 * @param axis The axis to rotate around. Must be a unit-axis.
+	 * @return This matrix, rotated around the given axis.
+	 */
+	public static Mat4 rotate(final float phi, final Vec3 axis) {
+		double rcos = FastMath.cos(phi);
+		double rsin = FastMath.sin(phi);
+		float x = axis.x;
+		float y = axis.y;
+		float z = axis.z;
+		Vec4 v1 = new Vec4((float) (rcos + x * x * (1 - rcos)), (float) (z * rsin + y * x * (1 - rcos)), (float) (-y * rsin + z * x * (1 - rcos)), 0);
+		Vec4 v2 = new Vec4((float) (-z * rsin + x * y * (1 - rcos)), (float) (rcos + y * y * (1 - rcos)), (float) (x * rsin + z * y * (1 - rcos)), 0);
+		Vec4 v3 = new Vec4((float) (y * rsin + x * z * (1 - rcos)), (float) (-x * rsin + y * z * (1 - rcos)), (float) (rcos + z * z * (1 - rcos)), 0);
+		Vec4 v4 = new Vec4(0, 0, 0, 1);
+		return new Mat4(v1, v2, v3, v4);
+	}
+
 }
