@@ -14,82 +14,123 @@
  */
 package com.hackoeur.jglm;
 
+import com.hackoeur.jglm.support.FastMath;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author James Royalty
  */
 public class MatricesTest {
+
 	@Test
 	public void testPerspective() {
-		Mat4 m1 = Matrices.perspective(60.0f, (640.0f/480.0f), 0.3f, 100.0f);
-		
+		Mat4 m1 = Matrices.perspective(60.0f, (640.0f / 480.0f), 0.3f, 100.0f);
+
 		/*
-		test_perspective:
-   1.29904    0.00000    0.00000    0.00000
-   0.00000    1.73205    0.00000    0.00000
-   0.00000    0.00000   -1.00602   -0.60181
-   0.00000    0.00000   -1.00000    0.00000
-		*/
-	}
-	
-	@Test
-	public void testFrustrum() {
-		Mat4 m1 = Matrices.frustum(-1.0f, 1.0f, -1.0f, 1.0f, 1.5f, 20.0f);
-		System.out.println(m1);
-		
-		/*
-		 test_frustrum:
-   1.50000    0.00000    0.00000    0.00000
-   0.00000    1.50000    0.00000    0.00000
-   0.00000    0.00000   -1.16216   -3.24324
-   0.00000    0.00000   -1.00000    0.00000
+		 test_perspective:
+		 1.29904    0.00000    0.00000    0.00000
+		 0.00000    1.73205    0.00000    0.00000
+		 0.00000    0.00000   -1.00602   -0.60181
+		 0.00000    0.00000   -1.00000    0.00000
 		 */
 	}
-	
+
+	@Test
+	public void testFrustrum() {
+		Mat4 got = Matrices.frustum(-1.0f, 1.0f, -1.0f, 1.0f, 1.5f, 20.0f);
+		Mat4 expected = new Mat4(
+				+1.50000000f, +0.00000000f, +0.00000000f, +0.00000000f,
+				+0.00000000f, +1.50000000f, +0.00000000f, +0.00000000f,
+				+0.00000000f, +0.00000000f, -1.16216218f, -1.00000000f,
+				+0.00000000f, +0.00000000f, -3.24324322f, +0.00000000f
+		);
+		System.out.println(got);
+		Assert.assertEquals(expected, got);
+	}
+
 	@Test
 	public void testLookAt() {
-		Mat4 m1 = Matrices.lookAt(
+		Mat4 got = Matrices.lookAt(
 				new Vec3(1f, 2f, 3f),
 				new Vec3(4f, 5f, 6f),
 				new Vec3(7f, 8f, 9f)
 		);
-		
-		System.out.println(m1);
-		
-		/*
-		 test_lookAt:
-   0.40825   -0.81650    0.40825   -0.00000
-  -0.70711    0.00000    0.70711   -1.41421
-  -0.57735   -0.57735   -0.57735    3.46410
-   0.00000    0.00000    0.00000    1.00000
-		 */
+		Mat4 expected = new Mat4(
+				+0.40824646f, -0.70710111f, -0.57734823f, +0.00000000f,
+				-0.81649292f, +0.00000000f, -0.57734823f, +0.00000000f,
+				+0.40824646f, +0.70710111f, -0.57734823f, +0.00000000f,
+				-0.00000000f, -1.41420221f, +3.46408939f, +1.00000000f
+		);
+		System.out.println(got);
+		Assert.assertEquals(expected, got);
 	}
-	
+
 	@Test
 	public void testOrtho() {
-		Mat4 m1 = Matrices.ortho(-1.0f, 1.0f, -1.0f, 1.0f, 1.5f, 20.0f);
-		System.out.println(m1);
-		/*
-		 test_ortho:
-   1.00000    0.00000    0.00000   -0.00000
-   0.00000    1.00000    0.00000   -0.00000
-   0.00000    0.00000   -0.10811   -1.16216
-   0.00000    0.00000    0.00000    1.00000
-		 */
+		Mat4 got = Matrices.ortho(-1.0f, 1.0f, -1.0f, 1.0f, 1.5f, 20.0f);
+		Mat4 expected = new Mat4(
+				+1.00000000f, +0.00000000f, +0.00000000f, +0.00000000f,
+				+0.00000000f, +1.00000000f, +0.00000000f, +0.00000000f,
+				+0.00000000f, +0.00000000f, -0.10810811f, +0.00000000f,
+				-0.00000000f, -0.00000000f, -1.16216218f, +1.00000000f
+		);
+		System.out.println(got);
+		Assert.assertEquals(expected, got);
 	}
-	
+
 	@Test
 	public void testOrtho2d() {
-		Mat4 m1 = Matrices.ortho2d(-1.0f, 20.0f, -10.0f, 20.0f);
-		System.out.println(m1);
-		
-		/*
-		 2d:
-   0.09524    0.00000    0.00000   -0.90476
-   0.00000    0.06667    0.00000   -0.33333
-   0.00000    0.00000   -1.00000    0.00000
-   0.00000    0.00000    0.00000    1.00000
-		 */
+		Mat4 got = Matrices.ortho2d(-1.0f, 20.0f, -10.0f, 20.0f);
+		Mat4 expected = new Mat4(
+				+0.09523810f, +0.00000000f, +0.00000000f, +0.00000000f,
+				+0.00000000f, +0.06666667f, +0.00000000f, +0.00000000f,
+				+0.00000000f, +0.00000000f, -1.00000000f, +0.00000000f,
+				-0.90476191f, -0.33333334f, +0.00000000f, +1.00000000f
+		);
+		System.out.println(got);
+		Assert.assertEquals(expected, got);
 	}
+
+	@Test
+	public void testRotate() {
+		System.out.println("Rotate");
+		Mat4 got, expected;
+		got = Matrices.rotate((float) FastMath.PI, new Vec3(1, 0, 0));
+		expected = new Mat4(
+				+1.000000E+0f, +0.000000E+0f, +0.000000E+0f, +0.000000E+0f,
+				+0.000000E+0f, -1.000000E+0f, -8.742278E-8f, +0.000000E+0f,
+				+0.000000E+0f, +8.742278E-8f, -1.000000E+0f, +0.000000E+0f,
+				+0.000000E+0f, +0.000000E+0f, +0.000000E+0f, +1.000000E+0f
+		);
+		Assert.assertEquals(expected, got);
+
+		got = Matrices.rotate((float) FastMath.PI, new Vec3(0, 1, 0));
+		expected = new Mat4(
+				-1.000000E+0f, +0.000000E+0f, +8.742278E-8f, +0.000000E+0f,
+				+0.000000E+0f, +1.000000E+0f, +0.000000E+0f, +0.000000E+0f,
+				-8.742278E-8f, +0.000000E+0f, -1.000000E+0f, +0.000000E+0f,
+				+0.000000E+0f, +0.000000E+0f, +0.000000E+0f, +1.000000E+0f
+		);
+		Assert.assertEquals(expected, got);
+
+		got = Matrices.rotate((float) FastMath.PI, new Vec3(0, 0, 1));
+		expected = new Mat4(
+				-1.000000E+0f, -8.742278E-8f, +0.000000E+0f, +0.000000E+0f,
+				+8.742278E-8f, -1.000000E+0f, +0.000000E+0f, +0.000000E+0f,
+				+0.000000E+0f, +0.000000E+0f, +1.000000E+0f, +0.000000E+0f,
+				+0.000000E+0f, +0.000000E+0f, +0.000000E+0f, +1.000000E+0f
+		);
+		Assert.assertEquals(expected, got);
+
+		got = Matrices.rotate((float) FastMath.PI, new Vec3(1, 1, 1).getUnitVector());
+		expected = new Mat4(
+				-0.33333474f, +0.66666520f, +0.66666530f, +0.0000000E+0f,
+				+0.66666530f, -0.33333474f, +0.66666520f, +0.0000000E+0f,
+				+0.66666520f, +0.66666530f, -0.33333474f, +0.0000000E+0f,
+				+0.00000000f, +0.00000000f, +0.00000000f, +1.0000000E+0f
+		);
+		Assert.assertEquals(expected, got);
+	}
+
 }
