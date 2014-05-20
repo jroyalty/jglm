@@ -22,7 +22,6 @@
 	</licenses>
 
 	<properties>
-		<hackoeur.lwjgl.version>2.8.5</hackoeur.lwjgl.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
