@@ -44,18 +44,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.lwjgl.lwjgl</groupId>
-			<artifactId>lwjgl</artifactId>
-			<version>${hackoeur.lwjgl.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.lwjgl.lwjgl</groupId>
-			<artifactId>lwjgl_util</artifactId>
-			<version>${hackoeur.lwjgl.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.10</version>
