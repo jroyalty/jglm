@@ -178,6 +178,34 @@ public class Mat4Test {
             
             Assert.assertEquals(expectedMul, multiplied);
         }
+
+    @Test
+    public void testMultiplicationWithVector(){
+        Mat4 m1 = new Mat4(
+                49.f, 50.f,29.f, 12.f,
+                23.f, 90.f, 45.f, 32.f,
+                5.f, 47.f, 46.f, 89.f,
+                86.f, 88.f, 20.f, 58.f
+        );
+
+        Vec4 v1 = new Vec4(
+                54.f,
+                43.f,
+                28.f,
+                64.f
+        );
+
+        Vec4 expectedMul = new Vec4(
+                9279.f,
+                13518.f,
+                6069.f,
+                8228.f
+        );
+
+        Vec4 multiplied = m1.multiply(v1);
+
+        Assert.assertEquals(expectedMul, multiplied);
+    }
         
         @Test
         public void testAddition() {

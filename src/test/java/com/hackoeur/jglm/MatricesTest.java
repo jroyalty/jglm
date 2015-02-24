@@ -133,4 +133,88 @@ public class MatricesTest {
 		Assert.assertEquals(expected, got);
 	}
 
+    @Test
+    public void testInverseMat4(){
+        final Mat4 expected = Mat4.MAT4_IDENTITY;
+
+        Mat4 matrix = new Mat4(+10.00000000f, +12.00000000f, +30.00000000f, +40.00000000f,
+                               +20.00000000f, +30.00000000f, +40.00000000f, +50.00000000f,
+                               +30.00000000f, +18.00000000f, +15.00000000f, +60.00000000f,
+                               +40.00000000f, +50.00000000f, +60.00000000f, +70.00000000f);
+        Mat4 invert = Matrices.invert(matrix);
+        Mat4 got = matrix.multiply(invert);
+        Assert.assertTrue(expected.equalsWithEpsilon(got, 1f));
+
+        matrix = new Mat4(+20.00000000f, +20.00000000f, +30.00000000f, +40.00000000f,
+                          +20.00000000f, +30.00000000f, +40.00000000f, +50.00000000f,
+                          +30.00000000f, +30.00000000f, +30.00000000f, +60.00000000f,
+                          +40.00000000f, +50.00000000f, +60.00000000f, +70.00000000f);
+        invert = Matrices.invert(matrix);
+        got = matrix.multiply(invert);
+        Assert.assertTrue(expected.equalsWithEpsilon(got, 1f));
+
+        matrix = new Mat4(+500.00000000f, +800.00000000f, +33.00000000f, +44.00000000f,
+                          +22.00000000f, +33.00000000f, +44.00000000f, +55.00000000f,
+                          +33.00000000f, +33.00000000f, +33.00000000f, +66.00000000f,
+                          +44.00000000f, +55.00000000f, +66.00000000f, +77.00000000f);
+        invert = Matrices.invert(matrix);
+        got = matrix.multiply(invert);
+        Assert.assertTrue(expected.equalsWithEpsilon(got, 1f));
+
+        matrix = new Mat4(-0.33333474f, +0.66666520f, +0.66666530f, +0.0000000E+0f,
+                          +0.66666530f, -0.33333474f, +0.66666520f, +0.0000000E+0f,
+                          +0.66666520f, +0.66666530f, -0.33333474f, +0.0000000E+0f,
+                          +0.00000000f, +0.00000000f, +0.00000000f, +1.0000000E+0f);
+        invert = Matrices.invert(matrix);
+        got = matrix.multiply(invert);
+        Assert.assertTrue(expected.equalsWithEpsilon(got, 1f));
+
+        matrix = new Mat4(+1.50000000f, +0.00000000f, +0.00000000f, +0.00000000f,
+                          +0.00000000f, +1.50000000f, +0.00000000f, +0.00000000f,
+                          +0.00000000f, +0.00000000f, -1.16216218f, -1.00000000f,
+                          +0.00000000f, +0.00000000f, -3.24324322f, +0.00000000f);
+        invert = Matrices.invert(matrix);
+        got = matrix.multiply(invert);
+        Assert.assertTrue(expected.equalsWithEpsilon(got, 1f));
+    }
+
+    @Test
+    public void testInverseMat3(){
+        final Mat3 expected = Mat3.MAT3_IDENTITY;
+
+        Mat3 matrix = new Mat3(+10.00000000f, +12.00000000f, +30.00000000f,
+                               +20.00000000f, +30.00000000f, +40.00000000f,
+                               +30.00000000f, +18.00000000f, +15.00000000f);
+        Mat3 invert = Matrices.invert(matrix);
+        Mat3 got = matrix.multiply(invert);
+        Assert.assertTrue(expected.equalsWithEpsilon(got, 1f));
+
+        matrix = new Mat3(+20.00000000f, +20.00000000f, +30.00000000f,
+                          +20.00000000f, +30.00000000f, +40.00000000f,
+                          +30.00000000f, +30.00000000f, +30.00000000f);
+        invert = Matrices.invert(matrix);
+        got = matrix.multiply(invert);
+        Assert.assertTrue(expected.equalsWithEpsilon(got, 1f));
+
+        matrix = new Mat3(+500.00000000f, +800.00000000f, +33.00000000f,
+                          +22.00000000f, +33.00000000f, +44.00000000f,
+                          +33.00000000f, +33.00000000f, +33.00000000f);
+        invert = Matrices.invert(matrix);
+        got = matrix.multiply(invert);
+        Assert.assertTrue(expected.equalsWithEpsilon(got, 1f));
+
+        matrix = new Mat3(-0.33333474f, +0.66666520f, +0.66666530f,
+                          +0.66666530f, -0.33333474f, +0.66666520f,
+                          +0.66666520f, +0.66666530f, -0.33333474f);
+        invert = Matrices.invert(matrix);
+        got = matrix.multiply(invert);
+        Assert.assertTrue(expected.equalsWithEpsilon(got, 1f));
+
+        matrix = new Mat3(+1.50000000f, +0.00000000f, +0.00000000f,
+                          +0.00000000f, +1.50000000f, +0.00000000f,
+                          +0.00000000f, +0.00000000f, -1.16216218f);
+        invert = Matrices.invert(matrix);
+        got = matrix.multiply(invert);
+        Assert.assertTrue(expected.equalsWithEpsilon(got, 1f));
+    }
 }
