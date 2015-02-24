@@ -133,4 +133,8 @@ public class MatricesTest {
 		Assert.assertEquals(expected, got);
 	}
 
+    @Test
+    public void testInverse(){
+       //TODO
+    }
 }
