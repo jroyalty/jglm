@@ -25,7 +25,7 @@ import com.hackoeur.jglm.support.Compare;
  * 
  * @author James Royalty
  */
-public final class Mat3 extends AbstractMat {
+public final class Mat3 extends AbstractMat<Vec3> {
 	public static final Mat3 MAT3_ZERO = new Mat3();
 	public static final Mat3 MAT3_IDENTITY = new Mat3(1.0f);
 	
@@ -231,16 +231,16 @@ public final class Mat3 extends AbstractMat {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends Vec> T getColumn(final int columnIndex) {
+	public Vec3 getColumn(final int columnIndex) {
 		assert columnIndex < 3 : "Invalid column index = " + columnIndex;
 		
 		switch (columnIndex) {
 		case 0:
-			return (T) new Vec3(m00, m01, m02);
+			return new Vec3(m00, m01, m02);
 		case 1:
-			return (T) new Vec3(m10, m11, m12);
+			return new Vec3(m10, m11, m12);
 		case 2:
-			return (T) new Vec3(m20, m21, m22);
+			return new Vec3(m20, m21, m22);
 		default:
 			throw new IllegalArgumentException("Invalid column index = " + columnIndex);
 		}
@@ -248,14 +248,14 @@ public final class Mat3 extends AbstractMat {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends Vec> Iterable<T> getColumns() {
+	public Iterable<Vec3> getColumns() {
 		List<Vec3> cols = new ArrayList<Vec3>(3);
 		
 		cols.add(new Vec3(m00, m01, m02));
 		cols.add(new Vec3(m10, m11, m12));
 		cols.add(new Vec3(m20, m21, m22));
 		
-		return (Iterable<T>) cols;
+		return cols;
 	}
 
 	@Override
