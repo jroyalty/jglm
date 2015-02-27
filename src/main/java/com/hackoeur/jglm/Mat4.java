@@ -25,7 +25,7 @@ import com.hackoeur.jglm.support.Compare;
  * 
  * @author James Royalty
  */
-public final class Mat4 extends AbstractMat {
+public final class Mat4 extends AbstractMat<Vec4> {
 	public static final Mat4 MAT4_ZERO = new Mat4();
 	public static final Mat4 MAT4_IDENTITY = new Mat4(1.0f);
 	
@@ -260,18 +260,18 @@ public final class Mat4 extends AbstractMat {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends Vec> T getColumn(final int columnIndex) {
+	public Vec4 getColumn(final int columnIndex) {
 		assert columnIndex < 4 : "Invalid column index = " + columnIndex;
 		
 		switch (columnIndex) {
 		case 0:
-			return (T) new Vec4(m00, m01, m02, m03);
+			return new Vec4(m00, m01, m02, m03);
 		case 1:
-			return (T) new Vec4(m10, m11, m12, m13);
+			return new Vec4(m10, m11, m12, m13);
 		case 2:
-			return (T) new Vec4(m20, m21, m22, m23);
+			return new Vec4(m20, m21, m22, m23);
 		case 3:
-			return (T) new Vec4(m30, m31, m32, m33);
+			return new Vec4(m30, m31, m32, m33);
 		default:
 			throw new IllegalArgumentException("Invalid column index = " + columnIndex);
 		}
@@ -279,7 +279,7 @@ public final class Mat4 extends AbstractMat {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends Vec> Iterable<T> getColumns() {
+	public Iterable<Vec4> getColumns() {
 		List<Vec4> cols = new ArrayList<Vec4>(4);
 		
 		cols.add(new Vec4(m00, m01, m02, m03));
@@ -287,7 +287,7 @@ public final class Mat4 extends AbstractMat {
 		cols.add(new Vec4(m20, m21, m22, m23));
 		cols.add(new Vec4(m30, m31, m32, m33));
 		
-		return (Iterable<T>) cols;
+		return cols;
 	}
 	
 	@Override
@@ -400,6 +400,13 @@ public final class Mat4 extends AbstractMat {
                             nm30, nm31, nm32, nm33
             );
         }
+
+    public Vec4 multiply(final Vec4 right) {
+        return new Vec4(this.m00 * right.x + this.m10 * right.y + this.m20 * right.z + this.m30 * right.w,
+                        this.m01 * right.x + this.m11 * right.y + this.m21 * right.z + this.m31 * right.w,
+                        this.m02 * right.x + this.m12 * right.y + this.m22 * right.z + this.m32 * right.w,
+                        this.m03 * right.x + this.m13 * right.y + this.m23 * right.z + this.m33 * right.w);
+    }
         
         /**
          * Subtract other matrix from this one and return the result ( this - right )
