@@ -39,6 +39,12 @@ public final class Vec3 extends AbstractVec {
 		this.z = z;
 	}
 	
+	public Vec3(final float f) {
+        	this.x = f;
+        	this.y = f;
+        	this.z = f;
+    	}
+	
 	public Vec3(final Vec3 vec) {
 		this.x = vec.x;
 		this.y = vec.y;
@@ -62,16 +68,35 @@ public final class Vec3 extends AbstractVec {
 		return new Vec3(x * invLength, y * invLength, z * invLength);
 	}
 	
+	public Vec3 getUnitVector(Vec3 res) {
+	        final float sqLength = getLengthSquared();
+	        final float invLength = FastMath.invSqrtFast(sqLength);
+
+	        return res.set(x * invLength, y * invLength, z * invLength);
+	}
+	
 	public Vec3 getNegated() {
 		return new Vec3(-x, -y, -z);
+	}
+	
+	public Vec3 getNegated(Vec3 res) {
+	        return res.set(-x, -y, -z);
 	}
 	
 	public Vec3 add(final Vec3 vec) {
 		return new Vec3( x + vec.x, y + vec.y, z + vec.z );
 	}
 	
+	public Vec3 add(final Vec3 vec, Vec3 res) {
+	        return res.set(x + vec.x, y + vec.y, z + vec.z);
+	}
+	
 	public Vec3 subtract(final Vec3 vec) {
 		return new Vec3( x - vec.x, y - vec.y, z - vec.z );
+	}
+	
+	public Vec3 subtract(final Vec3 vec, Vec3 res) {
+	        return res.set(x - vec.x, y - vec.y, z - vec.z);
 	}
 	
 	public Vec3 multiply(final Mat3 mat) {
