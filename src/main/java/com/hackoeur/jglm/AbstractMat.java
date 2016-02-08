@@ -23,7 +23,7 @@ import com.hackoeur.jglm.support.Compare;
 /**
  * @author James Royalty
  */
-abstract class AbstractMat<T extends Vec> implements Mat<T> {
+abstract class AbstractMat implements Mat {
 	private static final BufferAllocator BUFFER_ALLOCATOR = BufferAllocatorFactory.getInstance();
 
 	@Override

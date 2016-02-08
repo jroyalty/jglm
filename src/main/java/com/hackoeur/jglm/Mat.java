@@ -41,14 +41,14 @@ import java.nio.FloatBuffer;
  *
  * @author James Royalty
  */
-public interface Mat<T extends Vec> {
+public interface Mat {
 	int getNumRows();
 
 	int getNumColumns();
 
-	T getColumn(int columnIndex);
+	<T extends Vec>T getColumn(int columnIndex);
 
-	Iterable<T> getColumns();
+	<T extends Vec>Iterable<T> getColumns();
 
 	boolean isIdentity();
 
