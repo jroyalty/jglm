@@ -25,12 +25,12 @@ import com.hackoeur.jglm.support.Compare;
  */
 abstract class AbstractMat implements Mat {
 	private static final BufferAllocator BUFFER_ALLOCATOR = BufferAllocatorFactory.getInstance();
-	
+
 	@Override
 	public boolean equalsWithEpsilon(final Mat obj) {
 		return equalsWithEpsilon(obj, Compare.MAT_EPSILON);
 	}
-	
+
 	protected FloatBuffer allocateFloatBuffer() {
 		return BUFFER_ALLOCATOR.allocateFloatBuffer( getNumRows() * getNumColumns() );
 	}
