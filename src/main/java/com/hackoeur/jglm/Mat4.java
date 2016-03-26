@@ -426,6 +426,13 @@ public final class Mat4 extends AbstractMat {
                             m30 + other.m30, m31 + other.m31, m32 + other.m32, m33 + other.m33
             );
         }
+
+	public Vec4 multiply(final Vec4 right) {
+		return new Vec4(this.m00 * right.x + this.m10 * right.y + this.m20 * right.z + this.m30 * right.w,
+				this.m01 * right.x + this.m11 * right.y + this.m21 * right.z + this.m31 * right.w,
+				this.m02 * right.x + this.m12 * right.y + this.m22 * right.z + this.m32 * right.w,
+				this.m03 * right.x + this.m13 * right.y + this.m23 * right.z + this.m33 * right.w);
+	}
 	
 	public Mat4 translate(final Vec3 translation) {
 		Vec4 v0 = new Vec4(m00 * translation.x, m01 * translation.x, m02 * translation.x, m03 * translation.x);
