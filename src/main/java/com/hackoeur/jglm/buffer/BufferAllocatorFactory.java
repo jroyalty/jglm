@@ -15,6 +15,7 @@
 package com.hackoeur.jglm.buffer;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import com.hackoeur.jglm.support.JglmConfig;
@@ -34,12 +35,12 @@ public class BufferAllocatorFactory {
 	private static class DefaultBufferAllocator implements BufferAllocator {
 		@Override
 		public ByteBuffer allocateByteBuffer(int sizeInBytes) {
-			return ByteBuffer.allocate(sizeInBytes);
+			return ByteBuffer.allocateDirect(sizeInBytes).order(ByteOrder.nativeOrder());
 		}
 
 		@Override
 		public FloatBuffer allocateFloatBuffer(int sizeInFloats) {
-			return FloatBuffer.allocate(sizeInFloats);
+			return allocateByteBuffer(sizeInFloats << 2).asFloatBuffer();
 		}
 	};
 	
