@@ -34,12 +34,12 @@ public class BufferAllocatorFactory {
 	private static class DefaultBufferAllocator implements BufferAllocator {
 		@Override
 		public ByteBuffer allocateByteBuffer(int sizeInBytes) {
-			return ByteBuffer.allocate(sizeInBytes);
+			return ByteBuffer.allocateDirect(sizeInBytes);
 		}
 
 		@Override
 		public FloatBuffer allocateFloatBuffer(int sizeInFloats) {
-			return FloatBuffer.allocate(sizeInFloats);
+			return ByteBuffer.allocateDirect(sizeInFloats << 2).asFloatBuffer();
 		}
 	};
 	
