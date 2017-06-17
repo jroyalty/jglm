@@ -90,6 +90,14 @@ public final class Vec3 extends AbstractVec {
 		return multiply(scalar);
 	}
 	
+	public Vec3 scale(final Vec3 vec) {
+		return new Vec3(
+				this.x * vec.x,
+				this.y * vec.y,
+				this.z * vec.z
+		);
+	}
+	
 	public float dot(final Vec3 vec) {
 		return this.x * vec.x + this.y * vec.y + this.z * vec.z;
 	}
