@@ -1,6 +1,8 @@
 JGLM - Java OpenGL Mathematics Library
 ======================================
 
+[![Build Status](https://travis-ci.org/jroyalty/jglm.svg?branch=master)](https://travis-ci.org/jroyalty/jglm)
+
 A *conceptual* port of the [OpenGL Mathematics](http://glm.g-truc.net/) C++ 
 library (GLM).  I call this conceptual because a direct port of GLM to Java wouldn't
 make a ton of sense.  So, instead, I've taken the concept of providing some of
