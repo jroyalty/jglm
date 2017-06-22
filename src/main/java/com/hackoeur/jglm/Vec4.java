@@ -93,6 +93,19 @@ public final class Vec4 extends AbstractVec {
 		return multiply(scalar);
 	}
 	
+	/**
+	 * @return A new vector where every value of the original vector has
+	 * been multiplied with the corresponding value of the given vector.
+	 */
+	public Vec4 scale(final Vec4 vec) {
+		return new Vec4(
+				this.x * vec.x,
+				this.y * vec.y,
+				this.z * vec.z,
+				this.w * vec.w
+		);
+	}
+	
 	public float dot(final Vec4 vec) {
 		return this.x * vec.x + this.y * vec.y + this.z * vec.z + this.w * vec.w;
 	}

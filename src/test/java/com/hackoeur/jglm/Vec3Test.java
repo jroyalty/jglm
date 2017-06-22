@@ -38,6 +38,19 @@ public class Vec3Test {
 	}
 	
 	@Test
+	public void testScale() {
+		Vec3 v1 = new Vec3(724362380f, -328511470f, 2144268067f).scale(2.5f);
+		Assert.assertEquals(new Vec3(1810905856f, -821278656f, 5360670208f), v1);
+	}
+	
+	@Test
+	public void testScaleVector() {
+		Vec3 scalar = new Vec3(2.0f, 2.5f, 1.0f);
+		Vec3 v1 = new Vec3(724362380f, -328511470f, 2144268067f).scale(scalar);
+		Assert.assertEquals(new Vec3(1448724760f, -821278656f, 2144268067f), v1);
+	}
+	
+	@Test
 	public void testGetLength() {
 		Vec3 v1 = new Vec3(724362380f, -328511470f, 2144268067f);
 		float len = (float) StrictMath.sqrt( 
